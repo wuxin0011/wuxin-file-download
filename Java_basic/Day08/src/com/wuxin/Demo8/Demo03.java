@@ -1,6 +1,6 @@
-package com.wuxin.Demo;
+package com.wuxin.Demo8;
 
-import com.wuxin.Demo.bean.User;
+import com.wuxin.Demo8.bean.User;
 
 /**
  * @Author: wuxin001

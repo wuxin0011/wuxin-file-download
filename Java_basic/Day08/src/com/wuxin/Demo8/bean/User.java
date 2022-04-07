@@ -1,4 +1,4 @@
-package com.wuxin.Demo.bean;
+package com.wuxin.Demo8.bean;
 
 /**
  * @Author: wuxin001

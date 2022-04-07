@@ -28,6 +28,8 @@ public class Demo04File {
         System.out.println(file1.getPath());
         System.out.println(file1.getAbsoluteFile());
         System.out.println(file1.getAbsolutePath());
+        Object o = new Object();
+        o.hashCode();
         // System.out.println(Arrays.toString();
         for (File listFile : file1.getParentFile().listFiles()) {
             System.out.println("name"+listFile.getName());
