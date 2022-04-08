@@ -1,66 +1,49 @@
 package com.wuxin.demo;
 
 /**
- * 抽象类
- * 1、什么是抽象类？ 什么是类？什么是抽象类？
- *  类和类之间共同特征提取出来，形成的类就是抽象类
- *
- *  2、抽象类子类也可以是抽象类
- *  3、
- *
- *
  * @Author: wuxin001
  * @Date: 2022/04/06/19:44
- * @Description:
+ * @Description: 接口 接口和抽象类最大区别就是接口中不能有具体实现方法 抽象类中可以有实现方法
+ * 1、接口方法默认全部是可以访问的 即 public
+ * 2、接口可以看做是抽象类中特殊抽象类，所有方法完全是抽象的，继承该接口的类需要实现接口中的方法
+ * 3、与抽象类不同的是，接口可以多继承，抽象类只能是单继承
  */
 public class Demo03 {
     public static void main(String[] args) {
-        new Student().setUsername("admin0");
-        new Student().setUsername("admin1");
-        new Student().setUsername("admin2");
-        new Student().setUsername("admin3");
+        Add add = new Add();
+        int result = add.result(add, 100, 200);
+        System.out.println(result);
 
-        // 抽象类无法创建对象
-        Person person = new Person() {
-            @Override
-            void setUsername(String username) {
-                System.out.println(username + "是一个人");
-            }
-        };
-
-        person.setUsername("person1");
-        person.sleep("person1");
-        person.setUsername("person2");
-        person.sleep("person2");
-        person.setUsername("person3");
-        person.sleep("person3");
-        person.setUsername("person4");
-        person.sleep("person4");
-
-        // 抽象类无法创建对象，抽象类是用来继承的
-        // Father father = new Father();
+        /**
+         * 问题: 为什么 Add 类中result方法传入对象是sum接口，但是在Sum中没有实现，却能够输出结果？
+         * 1、首先 是 Add 继承了 Sum 类，由于接口是完全抽象的，因此必须要实现Sum类中方法
+         * 2、作为继承关系，Sum类相当于是Add类的父类，因此编译的时候，执行父类，父类Sum中有方法 add() 编译通过
+         * 运行的时候，该内存地址指向的是子类 Add ,因此调用的是 Add 中的方法
+         */
     }
 }
 
-abstract class Person {
+interface Sum {
 
-    abstract void setUsername(String username);
-
-    // 抽象类中可以有具体方法实现
-    void sleep(String name) {
-        System.out.println(name + "在睡觉");
-    }
+    /**
+     * 实现 两个数相加
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    int add(int a, int b);
 }
 
-class Student extends Person {
-
-    // 必须要实现抽象类方法 否则报错
+class Add implements Sum {
     @Override
-    void setUsername(String username) {
-        System.out.println("学生姓名是:" + username);
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+    public int result(Sum sum, int a, int b) {
+        return sum.add(a, b);
     }
 }
 
-abstract class Father{
 
-}
