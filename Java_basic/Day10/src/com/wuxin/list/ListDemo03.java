@@ -25,6 +25,8 @@ public class ListDemo03 {
         // 调用remove删除 调用了GC
         arrayList.remove(1);
         System.out.println(arrayList);
+        arrayList.remove("user5");
+        System.out.println(arrayList);
 
 
         Collection<Object> collection1 = new ArrayList<>();

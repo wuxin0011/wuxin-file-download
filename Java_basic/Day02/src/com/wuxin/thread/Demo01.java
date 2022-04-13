@@ -1,4 +1,4 @@
-package com.wuxin.thred;
+package com.wuxin.thread;
 
 /**
  * @Author: wuxin001
