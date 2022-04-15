@@ -15,8 +15,8 @@ public class SetDemo01 {
         HashSet<Object> set = new HashSet<>();
         set.add(new User(1));
         set.add(new User(2));
-        set.add(new User(1));
-        set.add(new User(1));
+        set.add(new User(3));
+        set.add(new User(4));
 
         System.out.println(set);
 

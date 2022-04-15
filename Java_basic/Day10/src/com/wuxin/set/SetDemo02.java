@@ -3,6 +3,7 @@ package com.wuxin.set;
 import com.wuxin.bean.Car;
 
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @Author: wuxin001
@@ -12,7 +13,7 @@ import java.util.HashSet;
 public class SetDemo02 {
 
     public static void main(String[] args) {
-        HashSet<Car> hashSet = new HashSet<>();
+        Set<Car> hashSet = new HashSet<>();
 
         hashSet.add(new Car("name1", "jidfae", "1fccdaf1"));
         hashSet.add(new Car("name2", "jidfad", "1fccdaf"));
