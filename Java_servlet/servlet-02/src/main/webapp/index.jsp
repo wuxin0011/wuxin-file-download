@@ -9,7 +9,7 @@
 </h1>
 <br />
 <a href="hello-servlet">Hello Servlet</a>
-<a href="login.jsp">Login</a>
+<a href="../../../../servlet-03/src/main/webapp/login.jsp">Login</a>
 
 </body>
 </html>

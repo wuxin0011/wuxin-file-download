@@ -5,6 +5,6 @@
 </head>
 <body>
 <h2>登录失败</h2>
-<a href="login.jsp">登录</a>
+<a href="../../../../servlet-03/src/main/webapp/login.jsp">登录</a>
 </body>
 </html>
