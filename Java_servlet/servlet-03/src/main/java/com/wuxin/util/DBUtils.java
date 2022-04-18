@@ -10,7 +10,8 @@ import java.util.ResourceBundle;
  */
 public class DBUtils {
 
-    private static final ResourceBundle bundle = ResourceBundle.getBundle("application.properties");
+    // 注意使用该方法读取配置文件不需要添加配置文件后缀名，但配置文件后缀必须是  .properties 解释看下面注释
+    private static final ResourceBundle bundle = ResourceBundle.getBundle("application");
     private static String driver = bundle.getString("driver");
     private static String url = bundle.getString("url");
     private static String username = bundle.getString("username");
@@ -59,3 +60,31 @@ public class DBUtils {
 
 
 }
+/**
+ * 解释 为什么不需要添加后缀，而且添加后缀就报错 源代码
+ *          public ResourceBundle newBundle(String baseName, Locale locale, String format,
+ *                                         ClassLoader loader, boolean reload)
+ *                     throws IllegalAccessException, InstantiationException, IOException {
+ *
+ *                 final String resourceName = toResourceName0(bundleName, "properties");
+ *             return bundle;
+ *         }
+ *
+ *         判断名称是否为null，或者是否合法
+ *          private String toResourceName0(String bundleName, String suffix) {
+ *             // application protocol check
+ *             if (bundleName.contains("://")) {
+ *                 return null;
+ *             } else {
+ *                 return toResourceName(bundleName, suffix);
+ *             }
+ *         }
+ *     }
+ *
+ *           名字是由这段代码实现拼接的
+*             public final String toResourceName(String bundleName, String suffix) {
+*                   StringBuilder sb = new StringBuilder(bundleName.length() + 1 + suffix.length());
+*                  sb.append(bundleName.replace('.', '/')).append('.').append(suffix);
+*                  return sb.toString();
+*            }
+ */
