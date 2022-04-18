@@ -2,7 +2,6 @@
 # Compiled class file
 *.class
 */.idea
-*/out
 # Log file
 *.log
 */*.class
@@ -14,6 +13,10 @@
 .mtj.tmp/
 
 # Package Files #
+#过滤所有target
+*target
+#过滤所有out
+*out
 *.jar
 *.war
 *.nar
