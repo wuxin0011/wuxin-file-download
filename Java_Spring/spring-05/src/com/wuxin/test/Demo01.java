@@ -2,6 +2,9 @@ package com.wuxin.test;
 
 import com.wuxin.bean.User;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.env.ConfigurableEnvironment;
+
+import java.util.Arrays;
 
 /**
  * @Author: wuxin001
@@ -13,7 +16,18 @@ public class Demo01 {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("bean.xml");
         User user = context.getBean("user", User.class);
         System.out.println(user);
-        User bean = (User) context.getBean("user", 1, "admin");
-        System.out.println(bean);
+
+        boolean userAop = context.containsBean("userAop");
+        System.out.println(userAop);
+
+        String[] beanNamesForType = context.getBeanNamesForType(User.class);
+        System.out.println(Arrays.toString(beanNamesForType));
+
+        ConfigurableEnvironment environment = context.getEnvironment();
+        System.out.println(environment);
+        System.out.println(environment.getSystemEnvironment());
+
+        System.out.println(environment.getPropertySources());
+
     }
 }

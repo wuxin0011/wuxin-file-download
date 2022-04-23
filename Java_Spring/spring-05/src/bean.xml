@@ -7,10 +7,8 @@
         http://www.springframework.org/schema/context
         https://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!--    <bean id="user" class="com.wuxin.bean.User">-->
-    <!--        <property name="userid" value="1"/>-->
-    <!--        <property name="username" value="admin"/>-->
-    <!--    </bean>-->
+    <!--    资源导入-->
+    <import resource="bean-aop.xml"/>
 
     <context:component-scan base-package="com.wuxin"/>
 

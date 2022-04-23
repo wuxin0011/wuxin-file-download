@@ -1,4 +1,4 @@
-package com.wuxin.linkedlist.bean;
+package com.wuxin.dou.bean;
 
 /**
  * @Author: wuxin001
@@ -30,6 +30,7 @@ public class SingleLinkedList {
         }
         // 最后一个节点指向新的节点
         tempNode.nextNode = newNode;
+        newNode  = tempNode;
     }
 
     /**
@@ -69,13 +70,17 @@ public class SingleLinkedList {
     }
 
     public void remove(int id) {
-        LinkedNode tempNode = headNode;
+        if (nodeIsNull(headNode.nextNode)) {
+            System.err.println("~ linked is null ~");
+            return;
+        }
+        LinkedNode tempNode = headNode.nextNode;
         boolean flag = false;
         while (true) {
-            if (nodeIsNull(tempNode.nextNode)) {
+            if (nodeIsNull(tempNode)) {
                 break;
             }
-            if (tempNode.nextNode.id == id) {
+            if (tempNode.id == id) {
                 flag = true;
                 break;
             }
@@ -84,7 +89,20 @@ public class SingleLinkedList {
         }
 
         if (flag) {
-            tempNode.nextNode = tempNode.nextNode.nextNode;
+            // 让该节点的上一个节点的next指向该节点的下一个节点
+            // 如果删除的是头节点 preNode=null
+            // if(nodeIsNotNull(tempNode.preNode)){
+            //
+            // }
+            if (nodeIsNotNull(tempNode.preNode)) {
+                tempNode.preNode.nextNode = tempNode.nextNode;
+            }
+
+            // 让该节点的下一个节点的pre指向该节点的上一个节点
+            // 如果删除的是尾节点 nextNode =null
+            if (nodeIsNotNull(tempNode.nextNode)) {
+                tempNode.nextNode.preNode = tempNode.preNode;
+            }
         } else {
             System.err.println("找不到该节点哦");
         }
@@ -96,7 +114,6 @@ public class SingleLinkedList {
      * @param updateNode
      */
     public void update(LinkedNode updateNode) {
-
         if (nodeIsNull(headNode.nextNode)) {
             System.err.println("linkedList is null");
             return;
@@ -142,11 +159,7 @@ public class SingleLinkedList {
             return;
         }
         LinkedNode tempNode = headNode.nextNode;
-
-        while (true) {
-            if (nodeIsNull(tempNode)) {
-                return;
-            }
+        while (nodeIsNotNull(tempNode)) {
             // 输出最后一个节点
             if (nodeIsNull(tempNode.nextNode)) {
                 System.out.println(tempNode);
