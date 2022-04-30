@@ -3,12 +3,9 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:aop="http://www.springframework.org/schema/aop"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-        https://www.springframework.org/schema/beans/spring-beans.xsd
-        https://www.springframework.org/schema/beans/spring-aop.xsd
-        http://www.springframework.org/schema/aop
-        http://www.springframework.org/schema/context
-        https://www.springframework.org/schema/context/spring-context.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+	  http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 
     <!--注解扫描-->
     <context:component-scan base-package="com.wuxin"/>
@@ -24,12 +21,12 @@
     <!-- 开启对切面的注解支持 -->
     <aop:aspectj-autoproxy/>
 
+    <bean id="myAspec" class="com.wuxin.aop.AopConfig"/>
     <!--面向切面的编程 最主要的目的就是批量处理或者在不影响源代码的情况下，单独修改某个方法的逻辑 -->
     <aop:config>
-        <aop:aspect ref="myAspec">
+        <aop:aspect ref="myAspec" >
             <!--定义切面，可以是指定，也可以是使用通配符匹配-->
-            <aop:pointcut expression="execution(* com.wuxin.service.impl.UserServiceImpl.(String,String))"
-                          id="servicePc"/>
+            <aop:pointcut expression="execution(* com.wuxin.service.impl.*.*(..))" id="servicePc"/>
             <!--执行之前-->
             <aop:before method="before" pointcut-ref="servicePc"/>
             <!--环绕-->
@@ -41,6 +38,7 @@
             <!--结束之后-->
             <aop:after method="after" pointcut-ref="servicePc"/>
         </aop:aspect>
+
     </aop:config>
 
 </beans>
