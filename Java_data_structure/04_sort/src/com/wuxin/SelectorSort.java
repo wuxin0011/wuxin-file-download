@@ -9,7 +9,7 @@ import java.util.Arrays;
  * @Date: 2022/04/22/17:17
  * @Description: 排序算法 选择排序
  */
-public class Demo01 {
+public class SelectorSort {
     public static void main(String[] args) {
         int[] ints = {2, 1, 87, 9, 29, 44, 90, 23, 11, 0, -1, 100};
         sort1(ints);

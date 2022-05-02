@@ -1,4 +1,4 @@
-package com.wuxin;
+package com.wuxin.insert;
 
 /**
  * @Author: wuxin001

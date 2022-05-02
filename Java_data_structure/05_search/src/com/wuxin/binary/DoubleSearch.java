@@ -1,4 +1,4 @@
-package com.wuxin.brand;
+package com.wuxin.binary;
 
 import java.util.ArrayList;
 

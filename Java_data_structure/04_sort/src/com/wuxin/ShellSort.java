@@ -8,7 +8,7 @@ import java.util.Currency;
  * @Date: 2022/04/22/17:17
  * @Description: 希尔排序 (分组排序)
  */
-public class Demo04 {
+public class ShellSort {
     public static void main(String[] args) {
         int[] a = {1, 3, 5, 79, 10, 33, 44, 222, 5, 24};
         System.out.println(a.length);

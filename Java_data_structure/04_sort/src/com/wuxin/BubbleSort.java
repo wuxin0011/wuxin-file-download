@@ -1,7 +1,5 @@
 package com.wuxin;
 
-import java.util.Arrays;
-
 /**
  * 什么是选择排序？
  *
@@ -9,7 +7,7 @@ import java.util.Arrays;
  * @Date: 2022/04/22/17:17
  * @Description: 排序 冒泡排序
  */
-public class Demo02 {
+public class BubbleSort {
     public static void main(String[] args) {
 
         // int[] ints = {2, 7, 11, 15};
@@ -20,7 +18,7 @@ public class Demo02 {
         // bubbleSort(ints1);
 
         testTime();
-        Demo01.testTime();
+        SelectorSort.testTime();
     }
 
     /**

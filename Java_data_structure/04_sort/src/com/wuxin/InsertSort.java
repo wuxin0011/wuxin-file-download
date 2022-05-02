@@ -7,7 +7,7 @@ import java.util.Arrays;
  * @Date: 2022/04/22/17:17
  * @Description: 插入排序
  */
-public class Demo03 {
+public class InsertSort {
 
     public static void main(String[] args) {
         int[] ints = {1, 100, 10, -29, 200, 199, 33, 4, 22};
