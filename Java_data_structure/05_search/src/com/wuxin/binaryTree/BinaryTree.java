@@ -18,7 +18,12 @@ public class BinaryTree {
 
     // 前序遍历
     public void preOrder() {
-        this.root.preOrder();
+        if (this.root != null) {
+            this.root.preOrder();
+        }else {
+            System.out.println("空节点！");
+        }
+
     }
 
 
@@ -26,7 +31,7 @@ public class BinaryTree {
         HeroNode heroNode = null;
         if (this.root != null) {
             heroNode = this.root.preOrderSearch(no);
-        }else {
+        } else {
             System.out.println("节点未找到！");
         }
         return heroNode;
@@ -34,14 +39,18 @@ public class BinaryTree {
 
     // 中序遍历
     public void midOrder() {
-        this.root.midOrder();
+        if (this.root != null) {
+            this.root.midOrder();
+        }else {
+            System.out.println("空节点！");
+        }
     }
 
     public HeroNode midOeOrderSearch(int no) {
         HeroNode heroNode = null;
         if (this.root != null) {
             heroNode = this.root.midOrderSearch(no);
-        }else {
+        } else {
             System.out.println("节点未找到！");
         }
         return heroNode;
@@ -49,16 +58,33 @@ public class BinaryTree {
 
     // 后序遍历
     public void postOrder() {
-        this.root.postOrder();
+        if (this.root != null) {
+            this.root.postOrder();
+        }else {
+            System.out.println("空节点！");
+        }
     }
 
     public HeroNode postOeOrderSearch(int no) {
         HeroNode heroNode = null;
         if (this.root != null) {
             heroNode = this.root.postOrderSearch(no);
-        }else {
+        } else {
             System.out.println("节点未找到！");
         }
         return heroNode;
+    }
+
+    public void delNode(int no) {
+        if (this.root != null) {
+            if (this.root.getNo() == no) {
+                this.root = null;
+            } else {
+                this.root.delNode(no);
+            }
+        } else {
+            System.out.println("root节点为null");
+        }
+
     }
 }

@@ -8,9 +8,7 @@ package com.wuxin.binaryTree;
 public class HeroNode {
     private int no;
     private String name;
-    // 左节点
     private HeroNode right;
-    // 右节点
     private HeroNode left;
 
     public HeroNode(int no, String name) {
@@ -18,6 +16,21 @@ public class HeroNode {
         this.name = name;
     }
 
+    public int getNo() {
+        return no;
+    }
+
+    public void setNo(int no) {
+        this.no = no;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public HeroNode getRight() {
         return right;
@@ -155,6 +168,29 @@ public class HeroNode {
             return this;
         }
         return null;
+    }
+
+
+    /**
+     * 删除节点
+     * 要求 ：
+     * 1、如果删除的节点是叶子节点，则删除该节点
+     * 2、如果删除的是非叶子节点，则删除该子树
+     *
+     * @param no 节点id
+     */
+    public void delNode(int no) {
+        if (this.left != null && this.left.no == no) {
+            this.left = null;
+            return;
+        }
+        if (this.right != null && this.right.no == no) {
+            this.right = null;
+            return;
+        }
+        if (this.left != null) {
+            this.left.delNode(no);
+        }
     }
 
 

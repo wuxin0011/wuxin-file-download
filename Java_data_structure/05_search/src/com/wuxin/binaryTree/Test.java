@@ -46,5 +46,12 @@ public class Test {
         System.out.println("===========后序查找============");
         System.out.println(binaryTree.preOrderSearch(4));
         System.out.println(binaryTree.preOrderSearch(10));
+
+        System.out.println("===========节点删除============");
+        System.out.println("节点删除之前");
+        binaryTree.preOrder();
+        binaryTree.delNode(1);
+        System.out.println("节点删除之后");
+        binaryTree.preOrder();
     }
 }
