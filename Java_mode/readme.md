@@ -290,6 +290,7 @@
 ## 结尾
 
 >笔记来源 https://zhuanlan.zhihu.com/p/128145128
+>笔记来源 https://www.cnblogs.com/zongwei/p/14101445.html#32-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8Fabstract-factory
 
 
 
