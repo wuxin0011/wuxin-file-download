@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuxin.mapper.MessageMapper">
+    <select id="list" resultType="com.wuxin.pojo.Message">
+        select *
+        from message
+        order by create_time desc
+    </select>
+
+
+    <select id="queryOne" parameterType="java.lang.Integer" resultType="com.wuxin.pojo.Message">
+        select *
+        from message
+        where mid = #{mid}
+        order by create_time desc
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete
+        from message
+        where mid = #{mid}
+    </delete>
+
+    <update id="update" parameterType="com.wuxin.pojo.Message">
+        update message
+        <set>
+            <if test="name != null">name=#{name},</if>
+            <if test="content != null">content=#{content},</if>
+            <if test="email != null">email=#{email},</if>
+            <if test="status != null">status=#{status}</if>
+        </set>
+        when cid = #{cid}
+    </update>
+
+    <insert id="add" parameterType="com.wuxin.pojo.Message">
+        insert into message (`content`, `email`, `status`, `create_time`)
+        values (#{content}, #{email}, 0, NOW())
+    </insert>
+
+</mapper>
