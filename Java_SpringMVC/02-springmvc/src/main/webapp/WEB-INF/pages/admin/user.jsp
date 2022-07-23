@@ -38,19 +38,25 @@
                     <c:forEach items="${requestScope.userList}" var="user" varStatus="index">
                         <tr>
                             <th scope="row" class="col-1">${user.id}</th>
-                            <td class="col-2 ">${user.username}</td>
-                            <td class="col-4">${user.email}</td>
-                            <td class="col-4 text-start">
-                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal" data-bs-whatever="${user}">编辑
+                            <td class="col-2 link-primary text-decoration-underline ">${user.username}</td>
+                            <td class="col-3 text-success">${user.email}</td>
+                            <td class="col-2"><fmt:formatDate value="${user.createTime}" pattern="yyyy/MM/dd"/></td>
+                            <td class="col-4 btn-group-sm">
+                                <button type="button"
+                                        class="btn btn-primary btn-sm"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal"
+                                        data-bs-id="${user.id}"
+                                        data-bs-username="${user.username}"
+                                        data-bs-email="${user.email}"
+                                        data-bs-status="${user.status}"
+                                        data-bs-role="${user.role}"
+                                >编辑
                                 </button>
-                                <c:if test="${user.status==1}">
-                                    <button class="btn btn-dark btn-sm" onclick="updateUser(${user})">禁用</button>
-                                </c:if>
-                                <c:if test="${user.status==0}">
-                                    <button class="btn btn-success btn-sm" onclick="updateUser(${user})">恢复</button>
-                                </c:if>
-                                <button class="btn btn-danger btn-sm" onclick="deleteUser(${user.id})">删除</button>
+                                <button class="btn btn-sm ${user.status==0?"btn-success":"btn-dark"}"
+                                        onclick="updateUserStatus(${user.id},${user.status})">${user.status==0?"恢复":"禁用"}
+                                </button>
+                                <button class="btn btn-danger btn-sm " onclick="deleteUser(${user.id})">删除</button>
                             </td>
                         </tr>
 
@@ -76,21 +82,20 @@
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">用户名:</label>
-                        <input type="text" class="form-control" id="recipient-name">
+                        <label for="username" class="col-form-label">用户名:</label>
+                        <input type="text" class="form-control" id="username">
                     </div>
                     <div class="mb-3">
-                        <label for="recipient-email" class="col-form-label">邮箱:</label>
-                        <input type="text" class="form-control" id="recipient-email">
+                        <label for="email" class="col-form-label">邮箱:</label>
+                        <input type="text" class="form-control" id="email">
                     </div>
                     <div class="mb-3">
-                        <label for="recipient-password" class="col-form-label">密码:</label>
-                        <input type="text" class="form-control" id="recipient-password">
+                        <label for="password" class="col-form-label">密码:</label>
+                        <input type="text" class="form-control" id="password">
                     </div>
                     <div class="mb-3">
-                        <label class="col-form-label">角色:</label>
-                        <input type="radio" class="form-control" name="radio" value="0">用户
-                        <input type="radio" class="form-control" name="radio" value="1">管理员
+                        <input type="radio" class="radio" name="role" value="0" id="roleuser">用户
+                        <input type="radio" class="radio" name="role" value="1" id="roleadmin">管理员
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -108,39 +113,69 @@
     exampleModal.addEventListener('show.bs.modal', event => {
         // 获取触发的button对象
         const button = event.relatedTarget
-        const user = button.getAttribute('data-bs-whatever')
-        if (!user) {
-            alert('获取不到用户信息')
-            return
-        }
-        console.log('user', JSON.stringify(user))
-        const recipient_name = exampleModal.querySelector('#recipient-name')
-        const recipient_email = exampleModal.querySelector('#recipient-email')
-        const recipient_password = exampleModal.querySelector('#recipient-password')
+
+        const id = button.getAttribute('data-bs-id')
+        const email = button.getAttribute('data-bs-email')
+        const username = button.getAttribute('data-bs-username')
+        const status = button.getAttribute('data-bs-status')
+        var role = button.getAttribute('data-bs-role')
+
+        console.log(username, email, status, role, id)
+
+        const recipient_name = exampleModal.querySelector('#username')
+        const recipient_email = exampleModal.querySelector('#email')
+        const recipient_password = exampleModal.querySelector('#password')
         // 判断事件类型
-        recipient_name.value = user.username
-        recipient_email.value = user.email
-        recipient_password.value = user.password
+        recipient_name.value = username
+        recipient_email.value = email
+
+        const roleadmin = exampleModal.querySelector('#roleadmin')
+        const roleuser = exampleModal.querySelector('#roleuser')
+
+        if (parseInt(role) === 1) {
+            roleadmin.setAttribute('checked', 'checked')
+        } else {
+            roleuser.setAttribute('checked', 'checked')
+        }
+
+
+        document.querySelector("#roleadmin").addEventListener('change', () => {
+            console.log('admin')
+            role = 1;
+
+        })
+
+        document.querySelector("#roleuser").addEventListener('change', () => {
+            console.log('user')
+
+            role = 0;
+
+        })
+
 
         document.querySelector("#updateUserBtn").addEventListener('click', () => {
-            var username = recipient_name.value.trim();
-            var email = recipient_email.value.trim();
-            var password = recipient_password.value.trim();
-            if (username.length < 4 || username.length > 15) {
+            var newUsername = recipient_name.value.trim();
+            var newEmail = recipient_email.value.trim();
+            var newPassword = recipient_password.value.trim();
+            console.log(newUsername, newEmail, newPassword === '', newPassword)
+            if (newUsername.length < 4 || newUsername.length > 15) {
                 alert("请填写用户名,长度在2-15")
                 return
             }
 
-            if (email.length === 0) {
+            if (!newEmail) {
                 alert("请填写邮箱")
                 return
             }
-            if (password.length !== 0 || (password.length < 4 || password.length > 20)) {
-                alert("请填写密码,密码长度4-20")
-                return
+            if (newPassword) {
+                if (newPassword.length < 4 || newPassword.length > 20) {
+                    alert("请填写密码,密码长度4-20")
+                    return
+                }
             }
 
-            update(user.id, username, email, password)
+
+            update(id, newUsername, newEmail, newPassword, role)
 
 
         })
@@ -148,23 +183,45 @@
 
     })
 
-    function updateUser(user) {
-        alert('updateUser===>' + JSON.stringify(user))
-        if (!user) {
-            alert('获取不到用户信息')
-            return
-        }
-        if (user.status === 0) {
-            user.status = 1
+
+    function updateUserStatus(id, status) {
+        if (status === 0) {
+            status = 1
         } else {
-            user.status = 0
+            status = 0
         }
-        update(user.id, user.username, user.email, user.password)
+        $.ajax({
+            url: '/admin/user/update/status',
+            type: 'post',
+            dataType: 'json',
+            data: {"id": id, "status": status},
+            success: function (result) {
+                if (result.code === 200) {
+                    alert(result.message)
+                    setTimeout(() => {
+                        window.location.reload()
+                    }, 1000)
+                } else {
+                    alert(result.message)
+                }
+            },
+            error: function (e) {
+                console.log(e)
+            },
+
+        })
+
     }
 
 
-    function update(id, username, email, password) {
-        var dataJSON = JSON.stringify({'id': id, 'username': username, 'email': email, 'password': password})
+    function update(id, username, email, password, role) {
+        var dataJSON = JSON.stringify({
+            'id': id,
+            'username': username,
+            'email': email,
+            'password': password,
+            role: role
+        })
         $.ajax({
             url: '/admin/user/update',
             type: 'post',
@@ -183,6 +240,7 @@
             },
             error: function (e) {
                 console.log(e)
+                alert('修改失败！服务器异常！')
             },
 
         })

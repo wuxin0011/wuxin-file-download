@@ -64,18 +64,18 @@ public interface UserMapper {
     /**
      * 用户信息修改
      *
-     * @param notice DTO
+     * @param user DTO
      * @return 1
      */
-    int update(User notice);
+    int update(User user);
 
     /**
      * 添加用户
      *
-     * @param notice DTO
+     * @param user DTO
      * @return 1
      */
-    int add(User notice);
+    int add(User user);
 
     /**
      * 删除用户
@@ -84,4 +84,13 @@ public interface UserMapper {
      * @return 1
      */
     int delete(@Param("id") int id);
+
+
+    /**
+     * 修改用户状态
+     * @param id id
+     * @param status 状态
+     * @return true
+     */
+    int updateStatus(@Param("id") Integer id, @Param("status") Integer status);
 }

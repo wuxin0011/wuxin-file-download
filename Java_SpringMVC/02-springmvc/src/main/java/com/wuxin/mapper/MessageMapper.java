@@ -54,4 +54,12 @@ public interface MessageMapper {
      */
     int delete(@Param("mid") int mid);
 
+
+    /**
+     * 修改状态
+     * @param mid mid
+     * @return int
+     */
+    int status(@Param("mid") Integer mid);
+
 }

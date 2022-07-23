@@ -33,12 +33,15 @@
                     <c:choose>
                         <c:when test="${requestScope.r.data.size()!=0}">
                             <c:forEach var="file" items="${requestScope.r.data}">
-                                <li class="mb-1 mt-1">
-                                        <%--                                    <a href="${pageContext.request.contextPath}/${file.url}" class="text-success text-decoration-none"--%>
-                                        <%--                                       download="${file.name}">${file.name}</a>--%>
-
+                                <li class="mb-1 mt-1 d-flex justify-content-between align-items-center">
                                     <span class="text-success text-decoration-none"
                                           data-url="${file.url}">${file.name}</span>
+                                    <form action="${pageContext.request.contextPath}/file/download"
+                                          method="post">
+                                        <input name="name" value="${file.name}" hidden>
+                                        <input name="url" value="${file.url}" hidden>
+                                        <input type="submit" class="btn btn-sm btn-primary" value="下载">
+                                    </form>
                                 </li>
                             </c:forEach>
                         </c:when>
@@ -57,27 +60,6 @@
     </section>
     <%@ include file="./common/footer.jsp" %>
 </div>
-
-<script>
-    $(function () {
-        $('ul li').on('click', function (e) {
-            console.log($(this).children('span').attr('data-url'))
-            var url = $(this).children('span').attr('data-url');
-            $.ajax({
-                url:'/file/download',
-                type:'get',
-                data:{'url':url},
-                success:function (result) {
-                    console.log(result)
-                },
-                error:function () {
-                    console.log('文件下载失败！')
-                }
-
-            })
-        })
-    })
-</script>
 
 </body>
 

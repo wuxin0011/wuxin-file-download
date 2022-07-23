@@ -1,4 +1,5 @@
-spring-mvc
+<!--如果需要分离配置 按照如下配置-->
+<!--spring-dao-->
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -44,7 +45,7 @@ spring-mvc
     <tx:annotation-driven transaction-manager="transactionManager" order="1"/>
 </beans>
 
-spring-dao
+<!--spring-mvc-->
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
@@ -82,6 +83,56 @@ spring-dao
         <!-- 给出需要扫描Dao接口包 -->
         <property name="basePackage" value="com.wuxin.mapper"/>
     </bean>
+
+
+    <!--spring-servlet-->
+     <context:component-scan base-package="com.wuxin"/>
+        <!--静态资源-->
+        <mvc:resources mapping="/css/**" location="/static/css/"/>
+        <mvc:resources mapping="/js/**" location="/static/js/"/>
+        <mvc:resources mapping="/image/**" location="/static/image/"/>
+        <!--windows-->
+        <mvc:resources mapping="/resource/**" location="file:///d://desktop//resource//"/>
+        <!--linux-->
+        <!--    <mvc:resources mapping="/resource/**" location="/usr/local/upload/resource/"/>-->
+
+        <!--设置servlet处理器handler-->
+        <mvc:default-servlet-handler/>
+
+        <!-- 默认的视图解析器 在上边的解析错误时使用 (默认使用html) ,也可以自定义解析器 实现ViewResolver接口 注意自定义解析器需要实现Order- -->
+        <bean id="defaultViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+            <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+            <property name="prefix" value="/WEB-INF/pages/"/>
+            <property name="suffix" value=".jsp"/>
+            <property name="exposeContextBeansAsAttributes" value="true"/>
+        </bean>
+
+        <!--配置文件上传解析器-->
+        <bean id="multipartResolver"
+              class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+            <!--设置文件编码格式-->
+            <property name="defaultEncoding" value="UTF-8"/>
+            <!--设置最大上传大小-->
+            <property name="maxUploadSize" value="10240000"/>
+        </bean>
+
+
+        <!--拦截器配置-->
+    <!--    <mvc:interceptors>-->
+    <!--        &lt;!&ndash; 配置登录拦截器&ndash;&gt;-->
+    <!--        <mvc:interceptor>-->
+    <!--            <mvc:mapping path="/admin/**"/>-->
+    <!--            <bean id="loginInterceptor" class="com.wuxin.interceptor.LoginInterceptor"/>-->
+    <!--        </mvc:interceptor>-->
+    <!--        &lt;!&ndash; 配置权限拦截器&ndash;&gt;-->
+    <!--        <mvc:interceptor>-->
+    <!--            <mvc:mapping path="/admin/*/update/**"/>-->
+    <!--            <mvc:mapping path="/admin/*/add/**"/>-->
+    <!--            <mvc:mapping path="/admin/*/delete/**"/>-->
+    <!--            <bean id="permissionInterceptor" class="com.wuxin.interceptor.PermissionInterceptor"/>-->
+    <!--        </mvc:interceptor>-->
+    <!--    </mvc:interceptors>-->
+
 
 
 </beans>

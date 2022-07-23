@@ -9,4 +9,12 @@ import com.wuxin.pojo.Message;
  * @Description:
  */
 public interface MessageService extends BaseService<Message> {
+
+
+    /**
+     * 修改状态
+     * @param mid
+     * @return int
+     */
+    boolean status(Integer mid);
 }

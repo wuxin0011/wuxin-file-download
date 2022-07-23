@@ -56,17 +56,27 @@ public class AdminUserController {
             R.error("邮箱格式错误！");
         }
 
+        // 如果密码为空！或者字符串
+        if (StringUtil.isEmpty(user.getPassword())) {
+            user.setPassword(null);
+        }
+
+        // 如果密码不为null需要添加判断条件
+        if (!StringUtil.isEmpty(user.getPassword()) && StringUtil.isPassword(user.getPassword())) {
+            R.error("修改失败！密码长度4-20！");
+        }
+
         if (!StringUtil.isUsername(user.getUsername())) {
             R.error("用户名格式错误，2-15");
         }
 
-        User dbUser = userService.queryOne(user.getId());
+        User dbUser = userService.queryById(user.getId());
         if (StringUtil.isNull(dbUser)) {
             R.error("用户不存在");
         }
 
         // 比较用户信息
-        if (!user.getUsername().equals(dbUser.getUsername())) {
+        if ( !user.getUsername().equals(dbUser.getUsername())) {
             User user1 = userService.queryUserByName(user.getUsername());
             if (user1 != null) {
                 return R.error(402, "用户名被占用！");
@@ -83,6 +93,18 @@ public class AdminUserController {
         // 密码加密对比数据库密码
 
         boolean update = userService.update(user);
+        if (!update) {
+            return R.error("用户信息修改失败！");
+        }
+        return R.ok("修改成功！");
+    }
+
+
+    @ResponseBody
+    @PostMapping(value = "/update/status", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public R updateStatus(@RequestParam("id") Integer id, @RequestParam("status") Integer status) {
+
+        boolean update = userService.updateStatus(id, status);
         if (!update) {
             return R.error("用户信息修改失败！");
         }

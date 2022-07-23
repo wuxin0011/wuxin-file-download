@@ -25,8 +25,18 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    public Message queryOne(Integer mid) {
+        return mapper.queryOne(mid);
+    }
+
+    @Override
     public boolean update(Message message) {
         return mapper.update(message) >= 1;
+    }
+
+    @Override
+    public boolean status(Integer mid) {
+        return mapper.status(mid) >= 1;
     }
 
     @Override

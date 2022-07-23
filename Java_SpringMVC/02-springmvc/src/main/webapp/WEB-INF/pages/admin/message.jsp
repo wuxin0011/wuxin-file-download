@@ -35,19 +35,22 @@
                             <c:forEach var="item" items="${requestScope.r.data}">
                                 <c:if test="${item.status==0}">
                                     <div class="card mt-4">
-                                        <h5 class="card-header fs-5">${item.email}</h5>
-                                        <div class="card-body btn-group-sm fs-6">
-                                            <p class="card-text bd-highlight fs-6">${item.content}</p>
-                                            <p class="card-text  fs-6"><fmt:formatDate
+                                        <h5 class="card-header fs-6">${item.email}</h5>
+                                        <div class="card-body btn-group-sm ">
+                                            <p class="card-text bd-highlight">${item.content}</p>
+                                            <p class="card-text"><fmt:formatDate
                                                     pattern="yyyy-MM-dd HH-mm" value="${item.createTime}"/></p>
 
                                         </div>
                                         <div class="card-footer btn-group-sm">
-                                            <button class="btn btn-primary btn-sm">已阅</button>
-                                            <button type="button" class="btn btn-dark btn-sm" data-bs-toggle="modal"
+                                            <button class="btn btn-primary " onclick="changeStatus(${item.mid})">已阅
+                                            </button>
+                                            <button type="button" class="btn btn-dark " data-bs-toggle="modal"
                                                     data-bs-target="#exampleModal" data-bs-whatever="${item}">回复
                                             </button>
-                                            <button class="btn btn-danger btn-sm">删除</button>
+                                            <button class="btn btn-danger" onclick="deleteMessage(${item.mid})">
+                                                删除
+                                            </button>
                                         </div>
                                     </div>
                                 </c:if>
@@ -60,10 +63,10 @@
                             <c:forEach var="item" items="${requestScope.r.data}">
                                 <c:if test="${item.status==1}">
                                     <div class="card mt-4">
-                                        <h5 class="card-header" style="font-size: 16px;">${item.email}</h5>
+                                        <h5 class="card-header fs-6">${item.email}</h5>
                                         <div class="card-body btn-group-sm">
-                                            <p class="card-text" style="font-size: 14px;">${item.content}</p>
-                                            <p class="card-text" style="font-size: 14px;"><fmt:formatDate
+                                            <p class="card-text fs-6">${item.content}</p>
+                                            <p class="card-text fs-6"><fmt:formatDate
                                                     pattern="yyyy-MM-dd HH-mm" value="${item.createTime}"/></p>
 
                                         </div>
@@ -72,7 +75,7 @@
                                         <button type="button" class="btn btn-dark " data-bs-toggle="modal"
                                                 data-bs-target="#exampleModal" data-bs-whatever="${item}">回复
                                         </button>
-                                        <button class="btn btn-danger ">删除</button>
+                                        <button class="btn btn-danger " onclick="deleteMessage(${item.mid})">删除</button>
                                     </div>
                                 </c:if>
 
@@ -89,30 +92,26 @@
     </section>
 
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
+                    <h5 class="modal-title" id="exampleModalLabel">回复</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="recipient-name" class="col-form-label">Recipient:</label>
-                            <input type="text" class="form-control" id="recipient-name">
-                        </div>
-                        <div class="mb-3">
-                            <label for="message-text" class="col-form-label">Message:</label>
-                            <textarea class="form-control" id="message-text"></textarea>
-                        </div>
-                    </form>
+                    <div class="mb-3">
+                        <label for="content" class="col-form-label">内容:</label>
+                        <input type="text" name="content" class="form-control" id="content" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="reply" class="col-form-label">你的回复:</label>
+                        <textarea class="form-control" id="reply" name="reply"></textarea>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Send message</button>
+                <div class="modal-footer btn-group-sm">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="submitNoticeBtn">提交</button>
                 </div>
             </div>
         </div>
@@ -124,67 +123,45 @@
 <script>
     const exampleModal = document.getElementById('exampleModal')
     exampleModal.addEventListener('show.bs.modal', event => {
-        // 获取触发的button对象
+
         const button = event.relatedTarget
-        const data = button.getAttribute('data-bs-whatever')
-        console.log(data);
-        // const modalInputTitle = exampleModal.querySelector('#notice-title')
-        // const modalInputContent = noticeModal.querySelector('#notice-content')
-        // const modalTitle = noticeModal.querySelector('#modal-title')
-        // var nid;
+
+        const messageData = button.getAttribute('data-bs-whatever')
+        console.log(messageData);
+        const {mid, content, email} = messageData
+
+        const modalTitle = exampleModal.querySelector('#exampleModalLabel')
+        const modalContent = exampleModal.querySelector('#content')
+        const modalReply = exampleModal.querySelector('#reply')
+
+        modalTitle.textContent = '来自' + email + '的消息'
+        modalContent.value = content
         // // 判断事件类型
-        // if (eventType === 'update') {
-        //     nid = button.getAttribute('data-bs-id')
-        //     const noticeTitle = button.getAttribute('data-bs-title')
-        //     const noticeContent = button.getAttribute('data-bs-content')
-        //
-        //
-        //     modalInputTitle.value = noticeTitle
-        //     modalInputContent.value = noticeContent
-        //     modalTitle.textContent='修改公告'
-        // }else {
-        //     modalTitle.textContent='添加公告'
-        // }
-        //
-        //
-        // document.querySelector("#submitNoticeBtn").addEventListener('click', () => {
-        //     var title = modalInputTitle.value.trim();
-        //     var content = modalInputContent.value.trim();
-        //     if (title.length === 0) {
-        //         alert("请填写标题")
-        //         return
-        //     }
-        //     console.log('hello--title')
-        //     if (content.length === 0) {
-        //         alert("请填写内容")
-        //         return
-        //     }
-        //
-        //     console.log(eventType, title, content, nid)
-        //
-        //     if (eventType === 'update') {
-        //         update(nid, title, content)
-        //     }
-        //     if (eventType === 'add') {
-        //         add(title, content)
-        //     }
-        //
-        // })
+
+        document.querySelector("#submitNoticeBtn").addEventListener('click', () => {
+            var reply = modalReply.value.trim();
+            if (reply.length === 0) {
+                alert("内容不能为空！")
+                return
+            }
+            console.log(reply);
+            //     提交消息 ...
+
+        })
 
 
     })
 
 
-    function changeStatus(message) {
-        message.status = 1
+    function changeStatus(mid) {
+        console.log('mid', mid)
         $.ajax({
-            url: '/admin/message/update',
+            url: '/admin/message/update/status',
             type: 'post',
             dataType: 'json',
-            data: JSON.stringify(message),
+            data: {'mid': mid},
             success: function (result) {
                 if (result.code === 200) {
-                    alert(result.message)
                     setTimeout(() => {
                         window.location.reload()
                     }, 1000)
@@ -193,67 +170,20 @@
                 }
             },
             error: function (e) {
-                console.log(e)
+                alert('修改失败！')
             },
 
         })
 
     }
 
-
-    function add(title, content) {
-        $.ajax({
-            url: '/admin/notice/add',
-            type: 'post',
-            dataType: 'json',
-            data: {'title': title, 'content': content},
-            success: function (result) {
-                if (result.code === 200) {
-                    alert(result.message)
-                    setTimeout(() => {
-                        window.location.reload()
-                    }, 1000)
-                } else {
-                    alert(result.message)
-                }
-            },
-            error: function (e) {
-                console.log(e)
-            },
-
-        })
-
-    }
 
     function deleteMessage(mid) {
+        if (!confirm('确认删除？')) {
+            return;
+        }
         $.ajax({
             url: '/admin/message/delete/' + mid,
-            type: 'post',
-            contentType: 'application/json',
-            dataType: 'json',
-            data: dataJSON,
-            success: function (result) {
-                if (result.code === 200) {
-                    alert(result.message)
-                    setTimeout(() => {
-                        window.location.reload()
-                    }, 1000)
-                } else {
-                    alert(result.message)
-                }
-            },
-            error: function (e) {
-                console.log(e)
-            },
-
-        })
-
-    }
-
-
-    function deleteNotice(nid) {
-        $.ajax({
-            url: '/admin/notice/delete/' + nid,
             type: 'get',
             dataType: 'json',
             success: function (result) {
@@ -267,7 +197,7 @@
                 }
             },
             error: function (e) {
-
+                console.log(e)
             },
 
         })

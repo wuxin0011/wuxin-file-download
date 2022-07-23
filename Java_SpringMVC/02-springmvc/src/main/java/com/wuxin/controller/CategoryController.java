@@ -3,24 +3,26 @@ package com.wuxin.controller;
 import com.wuxin.exception.CustomException;
 import com.wuxin.service.CategoryService;
 import com.wuxin.service.FileService;
+import com.wuxin.utils.FileUtil;
 import com.wuxin.utils.R;
+import com.wuxin.utils.ServletUtil;
 import com.wuxin.utils.StringUtil;
 import com.wuxin.vo.CategoryVo;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.ServletInputStream;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,21 +61,12 @@ public class CategoryController {
     }
 
 
-    @GetMapping("/file/download")
-    public R content(@RequestParam("url") String url, HttpServletRequest request , HttpServletResponse response) throws IOException {
-
-        if(StringUtil.isEmpty(url)){
-            throw new CustomException("文件路径为空！");
-        }
-
-        File file = new File("");
-        if(!file.exists()){
-            throw new CustomException("文件不存在！");
-        }
-
-        ServletInputStream inputStream = request.getInputStream();
-        ServletOutputStream outputStream = response.getOutputStream();
-        return R.ok("文件下载地址");
+    @PostMapping("/file/download")
+    public void content(
+            @RequestParam("url") String url,
+            @RequestParam("name") String name
+    ) throws IOException {
+        FileUtil.download(name, url);
     }
 
 

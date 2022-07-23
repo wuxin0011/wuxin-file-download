@@ -35,15 +35,15 @@ public class MessageController {
     public ModelAndView add(@RequestParam("email") String email, @RequestParam("content") String content) {
         ModelAndView view = new ModelAndView("message");
         if (StringUtil.isEmpty(content)) {
-            view.addObject("content", "内容不能为空！");
+            view.addObject("contentError", "内容不能为空！");
             return view;
         }
         if (!StringUtil.isEmail(email)) {
-            view.addObject("email", "邮箱格式错误！");
+            view.addObject("emailError", "邮箱格式错误！");
             return view;
         }
         // 将内容提交到数据库中
-        view.addObject("success", "消息发送成功！");
+        view.addObject("message", "消息发送成功！");
         messageService.add(new Message(null, content, email, 0, new Date()));
         return view;
     }

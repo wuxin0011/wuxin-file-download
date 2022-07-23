@@ -25,13 +25,6 @@ public interface UserService extends BaseService<User> {
 
 
 
-    /**
-     * 通过主键查询用户
-     *
-     * @param id 主键id
-     * @return DTO
-     */
-    User queryOne(int id);
 
 
     /**
@@ -54,4 +47,19 @@ public interface UserService extends BaseService<User> {
     List<User> queryUserByEmailOrName(String keywords);
 
 
+    /**
+     * 修改用户状态
+     * @param id 用户id
+     * @param status 状态
+     * @return true
+     */
+    boolean updateStatus(Integer id, Integer status);
+
+
+    /**
+     * id
+     * @param id
+     * @return
+     */
+    User queryById(Integer id);
 }

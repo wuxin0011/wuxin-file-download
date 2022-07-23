@@ -53,12 +53,29 @@
     <update id="update" parameterType="com.wuxin.pojo.User">
         update user
         <set>
-            <if test="username != null">`username`=#{username},</if>
-            <if test="password != null">`password`=#{password},</if>
-            <if test="status != null">`status`=#{status},</if>
-            <if test="email != null">`email`=#{email},</if>
-            <if test="role != null">`role`=#{role}</if>
+            <if test="username != null and username!=''">
+                `username`=#{username},
+            </if>
+            <if test="password != null and password!=''">
+                `password`=#{password},
+            </if>
+
+            <if test="email != null and email!=''">
+                `email`=#{email},
+            </if>
+            <if test="status != null">
+                `status`=#{status},
+            </if>
+            <if test="role != null">
+                `role`=#{role}
+            </if>
         </set>
+        where id = #{id}
+    </update>
+
+    <update id="updateStatus">
+        update user
+        set status=#{status}
         where id = #{id}
     </update>
 

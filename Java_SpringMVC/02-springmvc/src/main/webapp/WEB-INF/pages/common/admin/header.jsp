@@ -39,7 +39,7 @@
                         type: 'get',
                         dataType: 'json',
                         success: function (result) {
-                            if (result === 200) {
+                            if (result.code === 200) {
                                 setTimeout(() => {
                                     window.location.href = '/login'
                                 }, 1000)

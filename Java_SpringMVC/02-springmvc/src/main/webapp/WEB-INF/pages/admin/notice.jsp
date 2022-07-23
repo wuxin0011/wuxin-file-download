@@ -6,12 +6,6 @@
     <meta charset="utf-8">
     <title>通知管理</title>
     <jsp:include page="../common/headFile.jsp"/>
-
-    <style>
-        .card-text {
-            font-size: 16px;
-        }
-    </style>
 </head>
 <body>
 

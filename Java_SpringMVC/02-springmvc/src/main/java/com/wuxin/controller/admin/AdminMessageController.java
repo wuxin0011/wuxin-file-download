@@ -1,10 +1,12 @@
 package com.wuxin.controller.admin;
 
+import com.wuxin.exception.CustomException;
 import com.wuxin.pojo.Message;
 import com.wuxin.pojo.User;
 import com.wuxin.service.MessageService;
 import com.wuxin.utils.R;
 import com.wuxin.utils.ServletUtil;
+import com.wuxin.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -48,6 +50,19 @@ public class AdminMessageController {
     @GetMapping(value = "/message/update", produces = MediaType.APPLICATION_JSON_VALUE)
     public R deleteMessage(@RequestBody Message message) {
         boolean update = messageService.update(message);
+        if (!update) {
+            return R.error("修改失败");
+        }
+        return R.ok("修改成功！");
+    }
+
+    @ResponseBody
+    @PostMapping(value = "/message/update/status", produces = MediaType.APPLICATION_JSON_VALUE)
+    public R updateStatus(@RequestParam("mid") Integer mid) {
+        if (StringUtil.isNull(mid)) {
+            throw new CustomException("获取不到主键信息");
+        }
+        boolean update = messageService.status(mid);
         if (!update) {
             return R.error("修改失败");
         }

@@ -13,7 +13,6 @@
         select *
         from message
         where mid = #{mid}
-        order by create_time desc
     </select>
 
     <delete id="delete" parameterType="java.lang.Integer">
@@ -30,6 +29,13 @@
             <if test="email != null">email=#{email},</if>
             <if test="status != null">status=#{status}</if>
         </set>
+        where mid = #{mid}
+    </update>
+
+
+    <update id="status" parameterType="java.lang.Integer">
+        update message
+        set status = 1
         where mid = #{mid}
     </update>
 

@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User queryOne(int id) {
+    public User queryById(Integer id) {
         return userMapper.queryOne(id);
     }
 
@@ -69,5 +69,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> queryUserByEmailOrName(String keywords) {
         return userMapper.queryUserByEmailOrName(keywords);
+    }
+
+    @Override
+    public boolean updateStatus(Integer id, Integer status) {
+        return userMapper.updateStatus(id,status)>=1;
     }
 }
