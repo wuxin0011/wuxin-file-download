@@ -6,10 +6,14 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.ResourceBundle;
 
 /**
  * @author: wuxin001
@@ -19,7 +23,6 @@ import java.sql.Statement;
 // @RunWith(SpringJUnit4ClassRunner.class)
 // @ContextConfiguration({"classpath:spring/**.xml"})
 public class Test01 {
-
 
 
     @Test
@@ -45,7 +48,7 @@ public class Test01 {
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("select * from user");
         while (resultSet.next()) {
-            System.out.print(resultSet.getString("username")+"\t");
+            System.out.print(resultSet.getString("username") + "\t");
         }
 
         // 测试mapper
@@ -53,6 +56,27 @@ public class Test01 {
         System.out.println(categoryMapper.getClass().getSimpleName());
         System.out.println(categoryMapper.list());
 
+
+    }
+
+    @Test
+    public void test03() {
+        String file1 = "1.txt";
+        String file2 = "file";
+        System.out.println(ext(file1));
+        System.out.println(ext(file2));
+
+        ResourceBundle location = ResourceBundle.getBundle("location");
+        System.out.println(location.getString("mapping"));
+        System.out.println(location.getString("dir"));
+
+
+    }
+
+    public static String ext(String filePath) {
+        String[] split = filePath.split("\\.");
+        System.out.println(Arrays.toString(split));
+        return split[split.length - 1];
 
     }
 }

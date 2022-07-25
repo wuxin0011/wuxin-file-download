@@ -33,4 +33,12 @@ public interface FileService extends BaseService<File> {
      * @return
      */
     PageUtil<FileVo, Integer> queryPage(Integer cid, Integer limit, Integer size);
+
+
+    /**
+     * 通过cid删除
+     * @param cid cid
+     * @return true
+     */
+    boolean deleteByCid(Integer cid);
 }

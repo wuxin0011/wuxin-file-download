@@ -37,7 +37,7 @@ public interface CategoryMapper {
      * @param cid 主键id
      * @return category
      */
-    Category queryOne(@Param("cid") int cid);
+    Category queryOne(@Param("cid") Integer cid);
 
     /**
      * 根据主键删除
@@ -45,7 +45,7 @@ public interface CategoryMapper {
      * @param cid 主键id
      * @return 1
      */
-    int delete(@Param("cid") int cid);
+    int delete(@Param("cid") Integer cid);
 
     /**
      * 修改category

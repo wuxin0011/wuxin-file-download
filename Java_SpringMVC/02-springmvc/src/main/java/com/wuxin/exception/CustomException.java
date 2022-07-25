@@ -3,7 +3,7 @@ package com.wuxin.exception;
 /**
  * @author: wuxin001
  * @date: 2022/7/17 11:07
- * @Description:
+ * @Description: 自定义异常
  */
 public class CustomException extends RuntimeException {
     private int code;

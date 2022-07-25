@@ -27,7 +27,7 @@ public interface UserMapper {
      * @param id 主键id
      * @return DTO
      */
-    User queryOne(@Param("id") int id);
+    User queryOne(@Param("id") Integer id);
 
 
     /**
@@ -83,7 +83,7 @@ public interface UserMapper {
      * @param id id
      * @return 1
      */
-    int delete(@Param("id") int id);
+    int delete(@Param("id") Integer id);
 
 
     /**

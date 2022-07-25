@@ -42,7 +42,7 @@ public interface FileMapper {
      *
      * @return total
      */
-    int count();
+    int count(@Param("cid") Integer cid);
 
     /**
      * 返回文件列表
@@ -50,7 +50,7 @@ public interface FileMapper {
      * @param name 文件名 模糊查询
      * @return list
      */
-    List<File> queryList(String name);
+    List<File> queryList(@Param("name") String name);
 
     /**
      * 根据cid获取文件分类
@@ -58,14 +58,14 @@ public interface FileMapper {
      * @param cid category id
      * @return list
      */
-    List<File> queryListByCid(int cid);
+    List<File> queryListByCid(@Param("cid") Integer cid);
 
     /**
      * 联合查询，返回带有分类名的文件列表
      *
      * @return list
      */
-    List<FileVo> queryListAndCategory(@Param("cid") int cid);
+    List<FileVo> queryListAndCategory(@Param("cid") Integer cid);
 
     /**
      * 通过主键查询
@@ -73,7 +73,7 @@ public interface FileMapper {
      * @param fid 主键id
      * @return DTO
      */
-    File queryOne(int fid);
+    File queryOne(@Param("fid") Integer fid);
 
     /**
      * 添加
@@ -89,7 +89,15 @@ public interface FileMapper {
      * @param fid 主键
      * @return i
      */
-    int delete(int fid);
+    int delete(@Param("fid") Integer fid);
+
+    /**
+     * 删除
+     *
+     * @param cid 主键
+     * @return i
+     */
+    int deleteByCid(@Param("cid") Integer cid);
 
     /**
      * 修改

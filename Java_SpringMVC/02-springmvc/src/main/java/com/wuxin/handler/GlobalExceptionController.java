@@ -5,6 +5,7 @@ import com.wuxin.exception.UnauthenticatedException;
 import com.wuxin.utils.R;
 import com.wuxin.utils.ServletUtil;
 import com.wuxin.utils.StringUtil;
+import org.apache.commons.fileupload.FileUploadBase;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -55,6 +56,12 @@ public class GlobalExceptionController {
             mv.addAllObjects(R.error(403, message));
             return mv;
         }
+
+        if(e instanceof FileUploadBase.SizeLimitExceededException){
+            mv.addAllObjects(R.error(402, "文件过大！"));
+            return mv;
+        }
+
         mv.addAllObjects(R.error(message));
         return mv;
 

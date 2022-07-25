@@ -127,7 +127,7 @@
         const button = event.relatedTarget
 
         const messageData = button.getAttribute('data-bs-whatever')
-        console.log(messageData);
+
         const {mid, content, email} = messageData
 
         const modalTitle = exampleModal.querySelector('#exampleModalLabel')
@@ -144,7 +144,7 @@
                 alert("内容不能为空！")
                 return
             }
-            console.log(reply);
+
             //     提交消息 ...
 
         })
@@ -154,7 +154,7 @@
 
 
     function changeStatus(mid) {
-        console.log('mid', mid)
+
         $.ajax({
             url: '/admin/message/update/status',
             type: 'post',
@@ -197,7 +197,7 @@
                 }
             },
             error: function (e) {
-                console.log(e)
+
             },
 
         })

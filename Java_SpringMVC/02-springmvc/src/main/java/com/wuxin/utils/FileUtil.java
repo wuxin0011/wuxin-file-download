@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
-import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
@@ -21,15 +21,27 @@ public class FileUtil {
 
 
     private static String prefix = "";
-    private static String mapping = "//resource//";
+    private static String mapping = "";
     /*注意如果是linux环境一定要要修改，和application-web中对于映射路径一致！！*/
-    public final static String saveFolder = "d://desktop//resource//";
-    private final static String saveDir = "";
+    // public final static String saveFolder = "d://desktop//resource//";
+    public static String dir = "";
+    public static String saveFolder = "";
     private static final String saveTimeFolder = simpleDate() + "//";
-    private static final int BUFFER_SIZE = 1023;
+    private static final int BUFFER_SIZE = 1024;
+
 
     static {
+
+        try {
+            ResourceBundle location = ResourceBundle.getBundle("location");
+            mapping = location.getString("mapping");
+            dir = location.getString("dir");
+            saveFolder = dir + mapping;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         prefix = saveFolder + saveTimeFolder;
+
 
     }
 
@@ -54,10 +66,8 @@ public class FileUtil {
                 if (StringUtil.isEmpty(originalFilename)) {
                     return null;
                 }
-                String[] split = originalFilename.split("\\.");
-                // 获取图片文件后缀
-                String ext = split[split.length - 1];
-                String fileName = simpleUUID() + "." + ext;
+
+                String fileName = simpleUUID() + ext(originalFilename);
                 // 映射路径 通过域名+映射路径访问
                 fileMappingPath = mapping + saveTimeFolder + fileName;
                 // 文件保存的绝对路径
@@ -78,37 +88,34 @@ public class FileUtil {
             throw new CustomException("文件路径为空！");
         }
 
-        File file = new File("d://desktop//" + url);
+        File file = new File(dir + url);
         if (!file.exists()) {
             throw new CustomException("文件不存在！");
         }
 
         try {
             HttpServletResponse response = ServletUtil.getResponse();
-
-            // 获取文件后缀
-            String[] split = file.getName().split("\\.");
-            String ext = "." + split[split.length - 1];
-            String filename = name + ext;
             //获取文件输入流
             InputStream bis = new BufferedInputStream(new FileInputStream(file));
 
-
+            // 获取文件后缀
+            String filename = name + ext(file.getName());
             filename = URLEncoder.encode(filename, "UTF-8");
 
             response.addHeader("Content-Disposition", "attachment;filename=" + filename);
             //设置文件ContentType类型，这样设置，会自动判断下载文件类型
             response.setContentType("multipart/form-data");
             BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());
+            byte[] bytes = new byte[BUFFER_SIZE * BUFFER_SIZE];
             int len = 0;
-            while ((len = bis.read()) != -1) {
-                out.write(len);
-                out.flush();
+            while ((len = bis.read(bytes)) != -1) {
+                out.write(bytes, 0, len);
             }
+            out.flush();
             out.close();
         } catch (IOException e) {
             e.printStackTrace();
-            throw new CustomException("文件上传失败！");
+            throw new CustomException("文件下载失败！");
         }
 
     }
@@ -127,13 +134,13 @@ public class FileUtil {
         return new SimpleDateFormat("yyyy/MM").format(new Date());
     }
 
-    public static void main(String[] args) throws IOException {
-        ResourceBundle db = ResourceBundle.getBundle("db");
-        System.out.println(db.getString("file"));
-        Properties properties = new Properties();
-        properties.load(new FileReader("db.properties"));
 
-        String file = properties.getProperty("file");
-        System.out.println(file);
+    public static String ext(String filePath) {
+        if (StringUtil.isEmpty(filePath)) {
+            return "." + simpleUUID().substring(1, 5) + "empty";
+        }
+        String[] split = filePath.split("\\.");
+        return "." + split[split.length - 1];
     }
+
 }

@@ -22,9 +22,12 @@
     </select>
 
 
-    <select id="count" resultType="java.lang.Integer">
+    <select id="count" resultType="java.lang.Integer" parameterType="java.lang.Integer">
         select count(DISTINCT fid)
-        from file;
+        from file
+        <if test="cid != null or cid!=0">
+            where cid =#{cid}
+        </if>
     </select>
 
 
@@ -70,6 +73,12 @@
         where fid = #{fid}
     </delete>
 
+    <delete id="deleteByCid" parameterType="java.lang.Integer">
+        delete
+        from file
+        where cid = #{cid}
+    </delete>
+
     <update id="update" parameterType="com.wuxin.pojo.File">
         update file
         <set>
@@ -79,7 +88,7 @@
             <if test="status != null">status=#{status}</if>
         </set>
 
-        where cid = #{cid}
+        where fid = #{fid}
     </update>
 
     <insert id="add" parameterType="com.wuxin.pojo.File">

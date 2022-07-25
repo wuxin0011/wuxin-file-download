@@ -28,7 +28,7 @@ public interface MessageMapper {
      * @param mid 主键id
      * @return DTO
      */
-    Message queryOne(int mid);
+    Message queryOne(@Param("mid") Integer mid);
 
     /**
      * 消息内容修改
@@ -52,7 +52,7 @@ public interface MessageMapper {
      * @param mid 主键id
      * @return 1
      */
-    int delete(@Param("mid") int mid);
+    int delete(@Param("mid") Integer mid);
 
 
     /**

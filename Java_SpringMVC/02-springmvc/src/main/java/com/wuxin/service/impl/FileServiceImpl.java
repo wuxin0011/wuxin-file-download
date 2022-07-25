@@ -28,7 +28,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public boolean update(File file) {
-        return fileMapper.add(file) >= 1;
+        return fileMapper.update(file) >= 1;
     }
 
     @Override
@@ -49,7 +49,12 @@ public class FileServiceImpl implements FileService {
     @Override
     public PageUtil<FileVo, Integer> queryPage(Integer cid, Integer limit, Integer size) {
         List<FileVo> fileVos = fileMapper.queryPage(cid, limit, size);
-        int count = fileMapper.count();
+        int count = fileMapper.count(cid);
         return new PageUtil<>(cid, limit, size, count, fileVos);
+    }
+
+    @Override
+    public boolean deleteByCid(Integer cid) {
+        return fileMapper.deleteByCid(cid) > 0;
     }
 }

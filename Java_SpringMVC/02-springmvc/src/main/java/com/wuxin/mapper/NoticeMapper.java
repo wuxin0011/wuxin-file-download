@@ -26,7 +26,7 @@ public interface NoticeMapper {
      * @param nid 主键id
      * @return DTO
      */
-    Notice queryOne(@Param("nid") int nid);
+    Notice queryOne(@Param("nid") Integer nid);
 
     /**
      * 修改
@@ -50,5 +50,5 @@ public interface NoticeMapper {
      * @param nid 主键
      * @return 1
      */
-    int delete(@Param("nid") int nid);
+    int delete(@Param("nid") Integer nid);
 }

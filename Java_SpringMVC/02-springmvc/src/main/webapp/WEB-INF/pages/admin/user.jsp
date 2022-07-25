@@ -120,7 +120,7 @@
         const status = button.getAttribute('data-bs-status')
         var role = button.getAttribute('data-bs-role')
 
-        console.log(username, email, status, role, id)
+
 
         const recipient_name = exampleModal.querySelector('#username')
         const recipient_email = exampleModal.querySelector('#email')
@@ -140,13 +140,13 @@
 
 
         document.querySelector("#roleadmin").addEventListener('change', () => {
-            console.log('admin')
+
             role = 1;
 
         })
 
         document.querySelector("#roleuser").addEventListener('change', () => {
-            console.log('user')
+
 
             role = 0;
 
@@ -157,7 +157,7 @@
             var newUsername = recipient_name.value.trim();
             var newEmail = recipient_email.value.trim();
             var newPassword = recipient_password.value.trim();
-            console.log(newUsername, newEmail, newPassword === '', newPassword)
+
             if (newUsername.length < 4 || newUsername.length > 15) {
                 alert("请填写用户名,长度在2-15")
                 return
@@ -206,7 +206,7 @@
                 }
             },
             error: function (e) {
-                console.log(e)
+
             },
 
         })
@@ -239,7 +239,7 @@
                 }
             },
             error: function (e) {
-                console.log(e)
+
                 alert('修改失败！服务器异常！')
             },
 

@@ -84,7 +84,7 @@
                 type: 'post',
                 data: {'email': email, 'password': password},
                 success: function (res) {
-                    console.log(JSON.stringify(res))
+
                     if (res.code === 200) {
                         setTimeout(() => {
                             window.location.href = '/'

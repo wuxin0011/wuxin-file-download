@@ -3,6 +3,7 @@ package com.wuxin.controller.admin;
 import com.wuxin.pojo.Category;
 import com.wuxin.pojo.Notice;
 import com.wuxin.service.CategoryService;
+import com.wuxin.service.FileService;
 import com.wuxin.utils.R;
 import com.wuxin.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,10 @@ public class AdminCategoryController {
 
     @Autowired
     private CategoryService categoryService;
+
+
+    @Autowired
+    private FileService fileService;
 
     @GetMapping("")
     public String category(Model model) {
@@ -87,6 +92,8 @@ public class AdminCategoryController {
         if (!add) {
             return R.error("删除失败！该分类不存在");
         }
+        // 删除该分类下的所有文件
+        fileService.deleteByCid(cid);
         return R.ok("删除成功");
 
     }
