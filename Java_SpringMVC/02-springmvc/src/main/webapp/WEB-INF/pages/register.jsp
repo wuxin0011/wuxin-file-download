@@ -38,25 +38,22 @@
         <div class="col-lg-7 text-center text-lg-start">
         </div>
         <div class="col-md-10 mx-auto col-lg-5">
-            <form class="p-4 p-md-5 border rounded-3 bg-light" method="post">
+            <div class="p-4 p-md-5 border rounded-3 bg-light" ">
                 <div class=" mb-2">
                     <input type="email" class="form-control" name="email" id="email" placeholder="xx@xxx.com" required>
-                    <p class="text-danger " id="errorMessage"></p>
                 </div>
                 <div class=" mb-2">
                     <input type="password" class="form-control" id="password" name="password" placeholder="密码"
                            required>
-                    <p class="text-danger" id="errorPassword"></p>
                 </div>
                 <div class=" mb-2">
                     <input type="password" class="form-control" id="repassword" name="repassword" placeholder="密码验证"
                            required>
-                    <p class="text-danger" id="errorRePassword"></p>
                 </div>
                 <div class="d-grid gap-2">
                     <button class="btn btn-primary fs-5" type="button" id="registerBtn">注册</button>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
@@ -70,25 +67,21 @@
             var email = $("#email").val().trim();
 
             if (!email) {
-                $("#errorMessage").text("请输入邮箱").show().hide(2000);
-                return;
+                return alert('请输入邮箱');
             }
 
             var password = $("#password").val().trim();
             if (4 > password.length && password.length > 20) {
-                $("#errorPassword").text("密码4-20").show().hide(2000);
-                return;
+                return alert('密码4-20')
             }
 
             var repassword = $("#repassword").val().trim();
             if (4 > repassword.length && repassword.length > 20) {
-                $("#errorRePassword").text("密码4-20").show().hide(2000);
-                return;
+                return alert('密码4-20')
             }
 
-            if (repassword != password) {
-                $("#errorRePassword").text("两次密码不一致！").show().hide(2000);
-                return;
+            if (repassword !== password) {
+                return alert('两次密码不一致')
             }
 
             $.ajax({

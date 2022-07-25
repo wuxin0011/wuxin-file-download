@@ -47,35 +47,6 @@ public class AdminFileController {
     }
 
 
-    // @ResponseBody
-    // @PostMapping(value = "/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    // public ModelAndView addFile(
-    //         @RequestParam(value = "name", required = false) String name,
-    //         @RequestParam(value = "cid", required = false) Integer cid,
-    //         @RequestParam(value = "file", required = false) MultipartFile file
-    // ) {
-    //     if (StringUtil.isEmpty(name)) {
-    //         throw new CustomException("文件名为空");
-    //     }
-    //     if (StringUtil.isNull(cid)) {
-    //         throw new CustomException("请选择一个文件分类");
-    //     }
-    //     if (StringUtil.isNull(file)) {
-    //         throw new CustomException("文件内容为空！");
-    //     }
-    //     System.out.printf("上传文件信息:=={文件名：%s,文件大小：%s}%n", name, file.getSize());
-    //
-    //     String url = FileUtil.fileUtil(file);
-    //     if (url == null) {
-    //         throw new CustomException("上传失败！");
-    //     }
-    //     boolean add = fileService.add(new File(null, name, url, cid, 0, new Date()));
-    //     if (!add) {
-    //         throw new CustomException("添加失败！");
-    //     }
-    //
-    //     return new ModelAndView("/admin/file");
-    // }
 
 
     @ResponseBody

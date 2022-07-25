@@ -20,6 +20,8 @@
         <span class="text-danger">${requestScope.message}</span>
         <c:if test="${requestScope.code==401}">
             <a href="/login" class="link-primary" style="margin-left: 10px;">登录</a>
+            <br/>
+            没有账号？ <a href="/register" class="link-primary" style="margin-left: 10px;">注册一个</a>
         </c:if>
     </p>
 

@@ -22,20 +22,17 @@ public class PermissionInterceptor implements HandlerInterceptor {
         if (StringUtil.isEmpty(requestURI)) {
             return true;
         }
-        // 值包含amdin路径下的 添加删除修改操作
-        if (requestURI.contains("/admin")) {
+        if (!requestURI.contains("/admin")) {
+            return true;
+        } else {
             if (requestURI.contains("/add") || requestURI.contains("/update") || requestURI.contains("/delete")) {
                 User loginUser = (User) request.getSession().getAttribute("loginUser");
-                if (loginUser == null) {
-                    return false;
+                if (loginUser == null || loginUser.getRole() != 1) {
+                    throw new UnauthenticatedException();
                 }
-                if (loginUser.getRole() != null && loginUser.getRole() == 1) {
-                    return true;
-                }
-                // 没权限抛出异常
-                throw new UnauthenticatedException();
             }
         }
+
         return true;
     }
 }

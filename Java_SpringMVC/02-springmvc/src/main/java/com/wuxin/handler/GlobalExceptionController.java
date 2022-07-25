@@ -3,22 +3,12 @@ package com.wuxin.handler;
 import com.wuxin.exception.AuthException;
 import com.wuxin.exception.UnauthenticatedException;
 import com.wuxin.utils.R;
-import com.wuxin.utils.ServletUtil;
 import com.wuxin.utils.StringUtil;
 import org.apache.commons.fileupload.FileUploadBase;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * @author: wuxin001
@@ -28,13 +18,12 @@ import java.io.IOException;
 @ControllerAdvice
 public class GlobalExceptionController {
 
+
     @ExceptionHandler(Exception.class)
     public ModelAndView handleError(Exception e) {
 
         ModelAndView mv = new ModelAndView("error");
         String message = e.getMessage();
-
-        System.err.println("错误日志信息:"+message);
 
         if (e instanceof NoHandlerFoundException) {
             mv.addAllObjects(R.error(404, "页面未找到！"));
@@ -61,6 +50,11 @@ public class GlobalExceptionController {
             mv.addAllObjects(R.error(402, "文件过大！"));
             return mv;
         }
+
+
+
+
+        System.err.println("错误日志信息:"+message);
 
         mv.addAllObjects(R.error(message));
         return mv;

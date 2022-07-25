@@ -32,7 +32,7 @@ public class AdminNoticeController {
     }
 
     @ResponseBody
-    @PostMapping(value = "/add", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value = "/add", produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.TEXT_HTML_VALUE})
     public R addNotice(@RequestParam("title") String title, @RequestParam("content") String content) {
         if (StringUtil.isEmpty(title)) {
             return R.error("标题不能为空！");
@@ -49,7 +49,7 @@ public class AdminNoticeController {
     }
 
     @ResponseBody
-    @PostMapping(value = "/update", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value = "/update", produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.TEXT_HTML_VALUE})
     public R updateNotice(@RequestBody Notice notice) {
         if (StringUtil.isNull(notice)) {
             return R.error("消息不能为空");
@@ -71,7 +71,7 @@ public class AdminNoticeController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/delete/{nid}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(value = "/delete/{nid}", produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.TEXT_HTML_VALUE})
     public R deleteNotice(@PathVariable("nid") Integer nid) {
         if (StringUtil.isNull(nid)) {
             return R.error("获取不到id信息");

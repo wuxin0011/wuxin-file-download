@@ -31,14 +31,14 @@
                     </c:when>
 
                     <c:otherwise>
-                        <h2 class="text-dark fs-3">暂无公告！</h2>
+                        <h2 class="text-dark fs-5">暂无公告！</h2>
                     </c:otherwise>
                 </c:choose>
 
             </c:when>
 
             <c:otherwise>
-                <h2 class="text-danger fs-3">数据加载失败！</h2>
+                <h2 class="text-danger fs-5">数据加载失败！</h2>
             </c:otherwise>
         </c:choose>
 

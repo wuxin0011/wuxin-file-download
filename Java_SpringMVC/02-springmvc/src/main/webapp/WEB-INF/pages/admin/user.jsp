@@ -16,12 +16,12 @@
 <div class="container col-xl-6 col-sm-12 col-xs-12 col-xxl-4 px-10 py-10 mt-5">
     <jsp:include page="../common/admin/header.jsp"/>
     <div class="table-container">
-        <div class="mb-2">
-            <form class="form-inline" method="get" action="/admin/user">
-                <input class="form-control mr-sm-2 w-100" type="search" placeholder="Search keywrods ..."
-                       aria-label="Search">
-            </form>
-        </div>
+<%--        <div class="mb-2">--%>
+<%--            <form class="form-inline" method="get" action="/admin/user">--%>
+<%--                <input class="form-control mr-sm-2 w-100" type="search" placeholder="Search keywrods ..."--%>
+<%--                       aria-label="Search">--%>
+<%--            </form>--%>
+<%--        </div>--%>
         <c:choose>
             <c:when test="${requestScope.userList.size()!=0}">
                 <table class="table table-striped text-center overflow-hidden fs-6">
@@ -206,7 +206,7 @@
                 }
             },
             error: function (e) {
-
+                alert('操作失败！可能没有权限执行该操作！')
             },
 
         })
@@ -239,8 +239,7 @@
                 }
             },
             error: function (e) {
-
-                alert('修改失败！服务器异常！')
+                alert('操作失败！可能没有权限执行该操作！')
             },
 
         })
@@ -264,7 +263,7 @@
                 }
             },
             error: function (e) {
-
+                alert('操作失败！可能没有权限执行该操作！')
             },
 
         })

@@ -40,20 +40,13 @@
                 <div class="mb-3">
                     <input type="email" autocomplete="off" class="form-control" id="email" name="email"
                            placeholder="请输入邮箱...">
-                    <p class="text-danger" id="errorEmail"></p>
                 </div>
                 <div class=" mb-3">
                     <input type="password" autocomplete="off" class="form-control" id="password" name="password"
                            id="password"
                            placeholder="请输入密码...">
-                    <p class="text-danger" id="errorPassword"></p>
                 </div>
-<%--                <div class="form-check">--%>
-<%--                    <input class="form-check-input" type="checkbox" id="check" checked>--%>
-<%--                    <label class="form-check-label mb-3" for="check">--%>
-<%--                        记住我--%>
-<%--                    </label>--%>
-<%--                </div>--%>
+
                 <div class="d-grid gap-2">
                     <button class="btn btn-primary fs-5" type="button" id="loginBtn">登录</button>
                 </div>
@@ -68,15 +61,12 @@
         $("#loginBtn").click(function () {
             var email = $("#email").val();
             if (!email) {
-                $("#errorMessage").text("请输入邮箱").show().hide(2000);
-                return false;
+                return alert('请输入邮箱');
             }
 
             var password = $("#password").val();
-            var passwordLength = password.length;
-            if (passwordLength < 4 || passwordLength > 20) {
-                $("#errorPassword").text("密码4-20").show().hide(2000);
-                return false;
+            if (password.length < 4 || password.length > 20) {
+                return alert('密码4-20');
             }
             $.ajax({
                 url: '/to/login',
