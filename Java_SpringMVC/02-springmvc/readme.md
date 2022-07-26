@@ -120,12 +120,15 @@ COPY *.war /usr/local/tomcat/webapps
 VOLUME /usr/local/project/tomcat/webapps /usr/local/tomcat/webapps
 CMD ["catalina.sh","run"]
 EXPOSE 8081
+````
 
 
-从docker.hub中获取提交的镜像直接运行
+也可以直接从docker.hub中获取提交的镜像直接运行，我已经提交好了
 
+```shell
 docker run -d -p 8001:8080 --name=tomcat01 \
 --restart=always wuxin001/my-upload-download:v1.1
+```
 
 
 
