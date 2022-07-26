@@ -28,7 +28,7 @@
             <div class="mb-3 row">
                 <label for="verifyPassword" class="col-sm-3 col-form-label">验证密码</label>
                 <div class="col-sm-9">
-                    <input type="password" class="form-control" id="verifyPassword" name="verifyPassword">
+                    <input type="password" class="form-control" id="repassword" name="repassword">
                 </div>
             </div>
             <div class="mb-3 row">
@@ -47,7 +47,6 @@
                     <c:if test="${sessionScope.loginUser.role==0}">
                         <input type="text" class="form-control" id="role" value="用户" readonly>
                     </c:if>
-
                 </div>
             </div>
             <div class="mb-3 row">
@@ -80,16 +79,20 @@
                 var password = $("#password").val();
                 var repassword = $("#repassword").val();
 
+
+                if ((!password && repassword) || (password && !repassword)) {
+                    return alert('密码不一致！');
+                }
+
                 if (password && repassword) {
 
-
-                    if (password.length !== 0 || (password.length < 4 || password.length > 20)) {
-                        alert('密码长度4-20!')
+                    if (!(repassword.length === password.length && password === password)) {
+                        alert('两次密码不相等！')
                         return;
                     }
 
-                    if (!(repassword.length === password.length && epassword === password)) {
-                        alert('两次密码不相等！')
+                    if (password.length < 4 || password.length > 20) {
+                        alert('密码长度4-20!')
                         return;
                     }
 
@@ -136,9 +139,10 @@
             $.ajax({
                     url: '/admin/user/logout',
                     type: 'get',
+                    async: false,
                     dataType: 'json',
                     success: function (result) {
-                        if (result === 200) {
+                        if (result.code === 200) {
                             alert('修改成功！即将退出，请重新登录!')
                             setTimeout(() => {
                                 window.location.href = '/login'

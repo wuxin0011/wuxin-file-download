@@ -88,9 +88,9 @@ docker run -it --rm -p 8888:8080 tomcat:9.0.65-jdk8-openjdk-slim-buster
 curl localhost:8888 
 
 # 5、
-docker run -d -p 8888:8080 --name=tomcat \
+docker run -d -p 8001:8080 --name=tomcat \
 -v /usr/local/project/tomcat/webapps:/usr/local/tomcat/webapps \
---restart=always tomcat:9.0.65-jdk8-openjdk-slim-buster
+tomcat:9.0.65-jdk8-openjdk-slim-buster
 
 # 访问发现访问不到，需要加上项目名称 比如我这里是app.war 访问路径就是 192.168.233.50:8888/app/index
 # 点击连接发现路径还是访问不到这里有两个办法
@@ -127,7 +127,7 @@ EXPOSE 8081
 
 ```shell
 docker run -d -p 8001:8080 --name=tomcat01 \
---restart=always wuxin001/my-upload-download:v1.1
+wuxin001/my-upload-download:v1.0
 ```
 
 

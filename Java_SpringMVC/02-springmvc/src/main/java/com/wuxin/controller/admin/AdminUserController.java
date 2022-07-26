@@ -158,11 +158,9 @@ public class AdminUserController {
                 boolean update = userService.update(new User(user.getId(), user.getUsername(), null, user.getEmail(), loginUser.getStatus(), loginUser.getRole(), null));
                 if (update) {
                     return R.ok("修改成功！");
-                } else {
-                    return R.error(402, "修改失败！用户只能修改自己信息");
                 }
             } else {
-                return R.error(402, "获取不到登录用户信息");
+                return R.error(402, "修改失败！用户只能修改自己信息");
             }
 
         }

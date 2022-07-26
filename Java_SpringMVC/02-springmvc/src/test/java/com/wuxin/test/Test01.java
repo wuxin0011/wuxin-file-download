@@ -27,7 +27,7 @@ public class Test01 {
 
     @Test
     public void test02() throws SQLException {
-        ApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring/application-servlet.xml");
+        ApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring/application-dao.xml");
 
         // 测试 mapper扫描的容器实例
         String[] beanDefinitionNames = context.getBeanDefinitionNames();
