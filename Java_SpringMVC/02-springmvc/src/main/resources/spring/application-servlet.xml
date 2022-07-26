@@ -35,9 +35,9 @@
     <mvc:resources mapping="/image/**" location="/static/image/"/>
     <!--指定文件映射路径-->
     <!--windows-->
-    <mvc:resources mapping="/resource/**" location="file:///d://desktop//resource"/>
+<!--    <mvc:resources mapping="/resource/**" location="file:///d://desktop//resource"/>-->
     <!--linux-->
-    <!--    <mvc:resources mapping="/resource/**" location="/usr/local/upload/resource/"/>-->
+    <mvc:resources mapping="/resource/**" location="file:///usr/local/project/resource"/>
 
     <!--设置servlet处理器handler-->
     <mvc:default-servlet-handler/>

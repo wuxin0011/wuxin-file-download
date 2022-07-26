@@ -45,8 +45,16 @@
                                         <div class="card-footer btn-group-sm">
                                             <button class="btn btn-primary " onclick="changeStatus(${item.mid})">已阅
                                             </button>
-                                            <button type="button" class="btn btn-dark " data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal" data-bs-whatever="${item}">回复
+                                            <button
+                                                    type="button"
+                                                    class="btn btn-dark "
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal"
+                                                    data-bs-whatever="${item}"
+                                                    data-bs-mid="${itme.mid}"
+                                                    data-bs-content="${item.content}"
+                                                    data-bs-email="${item.email}"
+                                            >回复
                                             </button>
                                             <button class="btn btn-danger" onclick="deleteMessage(${item.mid})">
                                                 删除
@@ -72,8 +80,16 @@
                                         </div>
                                     </div>
                                     <div class="card-footer btn-group-sm">
-                                        <button type="button" class="btn btn-dark " data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal" data-bs-whatever="${item}">回复
+                                        <button
+                                                type="button"
+                                                class="btn btn-dark "
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal"
+                                                data-bs-whatever="${item}"
+                                                data-bs-mid="${itme.mid}"
+                                                data-bs-content="${item.content}"
+                                                data-bs-email="${item.email}"
+                                        >回复
                                         </button>
                                         <button class="btn btn-danger " onclick="deleteMessage(${item.mid})">删除</button>
                                     </div>
@@ -92,26 +108,26 @@
     </section>
 
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">回复</h5>
+                    <h5 class="modal-title fs-5" id="exampleModalLabel">回复</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="content" class="col-form-label">内容:</label>
-                        <input type="text" name="content" class="form-control" id="content" readonly>
+                        <textarea class="form-control" id="content" name="content" rows="3"></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="reply" class="col-form-label">你的回复:</label>
-                        <textarea class="form-control" id="reply" name="reply"></textarea>
+                        <textarea class="form-control" id="reply" name="reply" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer btn-group-sm">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" id="submitNoticeBtn">提交</button>
+                    <button type="button" class="btn btn-primary" id="submitBtn">提交</button>
                 </div>
             </div>
         </div>
@@ -126,26 +142,28 @@
 
         const button = event.relatedTarget
 
-        const messageData = button.getAttribute('data-bs-whatever')
+        const email = button.getAttribute('data-bs-email')
+        const mid = button.getAttribute('data-bs-mid')
+        const content = button.getAttribute('data-bs-content')
 
-        const {mid, content, email} = messageData
 
         const modalTitle = exampleModal.querySelector('#exampleModalLabel')
         const modalContent = exampleModal.querySelector('#content')
         const modalReply = exampleModal.querySelector('#reply')
 
-        modalTitle.textContent = '来自' + email + '的消息'
+        modalTitle.textContent = '来自' + email + '的消息:'
         modalContent.value = content
         // // 判断事件类型
 
-        document.querySelector("#submitNoticeBtn").addEventListener('click', () => {
+        exampleModal.querySelector("#submitBtn").addEventListener('click', () => {
             var reply = modalReply.value.trim();
             if (reply.length === 0) {
                 alert("内容不能为空！")
                 return
             }
+            addReply(mid,email,reply)
 
-            //     提交消息 ...
+
 
         })
 
@@ -201,6 +219,36 @@
             },
 
         })
+
+    }
+
+
+    function addReply(mid,email,reply) {
+        if (!confirm('确认提交？')) {
+            return;
+        }
+        //     提交消息 ...
+        return alert('该功能还没有实现哦！');
+        // $.ajax({
+        //     url: '/amdin/message/reply',
+        //     type: 'post',
+        //     dataType: 'json',
+        //     data:{mid,email,reply},
+        //     success: function (result) {
+        //         if (result.code === 200) {
+        //             alert(result.message)
+        //             setTimeout(() => {
+        //                 window.location.reload()
+        //             }, 1000)
+        //         } else {
+        //             alert(result.message)
+        //         }
+        //     },
+        //     error: function (e) {
+        //         alert('操作失败！可能无权限执行该操作！')
+        //     },
+        //
+        // })
 
     }
 

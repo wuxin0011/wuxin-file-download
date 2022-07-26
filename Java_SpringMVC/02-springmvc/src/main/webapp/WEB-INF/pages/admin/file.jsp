@@ -287,11 +287,11 @@
                     alert('请输入文件名！')
                     return;
                 }
-                if (fid === null || fid === undefined || fid === 0) {
+                if (!fid) {
                     alert('文件序号获取失败！')
                     return;
                 }
-                if (cid === null || cid === undefined || cid === 0) {
+                if (!cid ) {
                     alert('文件类型获取失败！')
                     return;
                 }

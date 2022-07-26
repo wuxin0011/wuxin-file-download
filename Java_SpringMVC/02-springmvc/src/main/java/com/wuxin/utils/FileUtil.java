@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.UUID;
@@ -23,7 +22,6 @@ public class FileUtil {
     private static String prefix = "";
     private static String mapping = "";
     /*注意如果是linux环境一定要要修改，和application-web中对于映射路径一致！！*/
-    // public final static String saveFolder = "d://desktop//resource//";
     public static String dir = "";
     public static String saveFolder = "";
     private static final String saveTimeFolder = simpleDate() + "//";

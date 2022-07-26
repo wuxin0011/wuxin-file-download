@@ -1,8 +1,11 @@
 package com.wuxin.service.impl;
 
+import com.alibaba.druid.sql.visitor.functions.If;
 import com.wuxin.mapper.UserMapper;
 import com.wuxin.pojo.User;
 import com.wuxin.service.UserService;
+import com.wuxin.utils.MD5Util;
+import com.wuxin.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,16 +26,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User isLogin(String email, String password) {
-        return userMapper.login(email, password);
+        return userMapper.login(email, MD5Util.md5DigestAsHex(password));
     }
 
     @Override
     public boolean add(User user) {
+        user.setPassword(MD5Util.md5DigestAsHex(user.getPassword()));
         return userMapper.add(user) >= 1;
     }
 
     @Override
     public boolean update(User user) {
+        if (!StringUtil.isEmpty(user.getPassword())) {
+            user.setPassword(MD5Util.md5DigestAsHex(user.getPassword()));
+        }
         return userMapper.update(user) >= 1;
     }
 
@@ -73,6 +80,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean updateStatus(Integer id, Integer status) {
-        return userMapper.updateStatus(id,status)>=1;
+        return userMapper.updateStatus(id, status) >= 1;
     }
 }

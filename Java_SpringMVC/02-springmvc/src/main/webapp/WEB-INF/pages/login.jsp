@@ -9,10 +9,8 @@
         .bg {
             width: 100vw;
             height: 100vh;
-            background: url(${pageContext.request.contextPath}/image/bg1.jpg);
-            background-position: center;
             background-size: cover;
-            background-repeat: no-repeat;
+            background: url(${pageContext.request.contextPath}/image/bg1.jpg) no-repeat center;
             z-index: -1;
             position: fixed;
         }
@@ -21,13 +19,6 @@
             z-index: 10;
         }
 
-        p.text-danger {
-            font-size: 14px !important;
-        }
-
-        p#errorEmail, p#errorPassword {
-            display: none;
-        }
     </style>
 </head>
 <body>
