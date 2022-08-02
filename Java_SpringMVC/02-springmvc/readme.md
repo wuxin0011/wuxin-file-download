@@ -126,8 +126,7 @@ EXPOSE 8081
 也可以直接从docker.hub中获取提交的镜像直接运行，我已经提交好了
 
 ```shell
-docker run -d -p 8001:8080 --name=tomcat01 \
-wuxin001/my-upload-download:v1.0
+docker run -d --name=tomact -p 8080:8080 wuxin001/my-upload-download:v2.0
 ```
 
 
