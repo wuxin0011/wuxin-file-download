@@ -47,14 +47,11 @@ public class AdminFileController {
     }
 
 
-
-
     @ResponseBody
     @PostMapping(value = "/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public R addFile(@RequestParam(value = "name", required = false) String name,
                      @RequestParam(value = "cid", required = false) Integer cid,
-                     @RequestParam(value = "file", required = false) MultipartFile file)
-    {
+                     @RequestParam(value = "file", required = false) MultipartFile file) {
         if (StringUtil.isEmpty(name)) {
             return R.error("文件名不能为！");
         }
@@ -79,11 +76,13 @@ public class AdminFileController {
     }
 
     @ResponseBody
-    @PostMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public R updateFile(
             @RequestParam("fid") Integer fid,
             @RequestParam("name") String name,
-            @RequestParam("cid") Integer cid
+            @RequestParam("cid") Integer cid,
+            @RequestParam("isremove") Boolean isremove,
+            @RequestParam(value = "file", required = false) MultipartFile file
     ) {
         if (StringUtil.isEmpty(name)) {
             return R.error("文件名不能为空！");
@@ -94,7 +93,25 @@ public class AdminFileController {
         if (StringUtil.isNull(cid)) {
             return R.error("文件分类不能为空！");
         }
-        boolean update = fileService.update(new File(fid, name, null, cid, 1, new Date()));
+
+        String url = null;
+
+        if (file != null && file.isEmpty()) {
+            throw new CustomException("上传失败！获取不到文件！");
+        }
+
+        if (file != null && !file.isEmpty()) {
+            url = FileUtil.fileUtil(file);
+            if (url == null) {
+                throw new CustomException("上传失败！获取不到文件路径！");
+            }
+            // 删除原来文件
+            File obj = fileService.queryOne(fid);
+            FileUtil.remove(obj,isremove);
+        }
+
+
+        boolean update = fileService.update(new File(fid, name, url, cid, 1, new Date()));
         if (!update) {
             return R.error("修改失败，文件不存在！");
         }
@@ -103,12 +120,16 @@ public class AdminFileController {
 
 
     @ResponseBody
-    @GetMapping(value = "/delete/{fid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public R deleteFile(@PathVariable("fid") Integer fid) {
+    @GetMapping(value = "/delete/{fid}/{isremove}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public R deleteFile(@PathVariable("fid") Integer fid,@PathVariable("isremove") boolean isremove) {
+        // 删除原来文件
+        File obj = fileService.queryOne(fid);
+        FileUtil.remove(obj,isremove);
+
         boolean add = fileService.delete(fid);
         if (!add) {
-            return R.error("修改失败！文件不存在！");
+            return R.error("删除失败！文件不存在！");
         }
-        return R.ok("修改成功！");
+        return R.ok("删除成功！");
     }
 }

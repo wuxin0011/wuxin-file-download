@@ -57,4 +57,9 @@ public class FileServiceImpl implements FileService {
     public boolean deleteByCid(Integer cid) {
         return fileMapper.deleteByCid(cid) > 0;
     }
+
+    @Override
+    public File queryOne(Integer id) {
+        return fileMapper.queryOne(id);
+    }
 }

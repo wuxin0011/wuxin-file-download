@@ -141,4 +141,20 @@ public class FileUtil {
         return "." + split[split.length - 1];
     }
 
+    public static void remove(com.wuxin.pojo.File obj) {
+        remove(obj, true);
+    }
+
+    public static void remove(com.wuxin.pojo.File obj, boolean isremove) {
+
+        if (obj != null && isremove) {
+            String url1 = obj.getUrl();
+            if (url1 != null) {
+                File file = new File(dir + url1);
+                if (file.exists()) {
+                    file.delete();
+                }
+            }
+        }
+    }
 }
