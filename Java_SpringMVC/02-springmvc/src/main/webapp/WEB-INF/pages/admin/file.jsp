@@ -226,9 +226,6 @@
                 nameInput.value = name
             }
 
-
-            console.log('cid', cid, 'type', type, 'name', name)
-
             // 监听选择框改变事件
             selectCategory.addEventListener('change', function (e) {
                 cid = e.target.value * 1
@@ -282,7 +279,6 @@
         if (!confirm('确认上传？')) {
             return;
         }
-        console.log('create', 'cid', cid, 'name', name)
 
 
         fileUpload.classList = 'col-8 text-primary file-upload'
@@ -330,13 +326,14 @@
         if(file){
             isremove =   confirm('原文件是否删除')
         }
+
+        fileUpload.classList = 'col-8 text-primary file-upload'
         var formData = new FormData();
         formData.append("name", name)
         formData.append("cid", cid)
         formData.append("fid", fid)
         formData.append("file", file)
         formData.append("isremove", isremove)
-        console.log('update', 'cid', cid,'fid',fid, 'name', name)
         $.ajax({
             url: '/admin/file/update',
             method: 'post',
