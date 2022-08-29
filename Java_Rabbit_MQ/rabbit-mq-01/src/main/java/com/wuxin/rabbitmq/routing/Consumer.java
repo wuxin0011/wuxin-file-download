@@ -1,19 +1,21 @@
-package com.wuxin.rabbitmq.simple;
+package com.wuxin.rabbitmq.routing;
 
-import com.rabbitmq.client.*;
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.DeliverCallback;
 import com.wuxin.rabbitmq.util.RabbitMQUtil;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 /**
  * @Author: wuxin001
- * @Description:
+ * @Description: 路由模式
  */
 public class Consumer {
 
+    public static final String EXCHANGE_NAME = "direct_logs";
+
+
     public static void main(String[] args) {
-        // ip port
         // 1、创建连接工程
         ConnectionFactory connectionFactory = new ConnectionFactory();
         // 2、创建连接connection
@@ -25,29 +27,21 @@ public class Consumer {
         Connection connection = null;
         Channel channel = null;
         try {
-            // 创建连接 connection
-            connection = connectionFactory.newConnection("消费者");
-            // 创建channel连接通道
+            // 创建连接
+            connection = connectionFactory.newConnection();
+            // 创建通道
             channel = connection.createChannel();
-            String queueName = "fanout_queue1";
-            /**
-             * 参数说明
-             * @params1 队列名称
-             * @params2 是否持久化
-             * @params3 排他性，是否独立（是否是一个独占队列）
-             * @params4 是否自动删除，随着最后一个消费者消息完毕以后是否自动把队列自动删除
-             * @params5 携带附带参数
-             */
-            channel.queueDeclare(queueName, false, false, false, null);
-            // 准备发送消息内容
+            // 获取队列名称
+            String queueName = channel.queueDeclare().getQueue();
+            System.out.println(EXCHANGE_NAME + " [*] Waiting for messages. To exit press CTRL+C");
+
             DeliverCallback deliverCallback = (consumerTag, delivery) -> {
-                String message = new String(delivery.getBody(), StandardCharsets.UTF_8);
-                System.out.println(RabbitMQUtil.date() + " 接受消息: '" + message + "'");
+                String message = new String(delivery.getBody(), "UTF-8");
+                System.out.println(EXCHANGE_NAME + " [x] Received '" + message + "'");
             };
             channel.basicConsume(queueName, true, deliverCallback, consumerTag -> {
+                System.out.println("\"queueName,\""+queueName+",\"deliverCallback\""+deliverCallback+"\",consumerTag\""+consumerTag);
             });
-
-
             System.in.read();
         } catch (Exception e) {
             e.printStackTrace();
