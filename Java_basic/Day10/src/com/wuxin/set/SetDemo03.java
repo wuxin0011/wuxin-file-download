@@ -10,6 +10,7 @@ import java.util.List;
  * @Date: 2022/04/14/22:13
  * @Description: set与list不同是不可以重复 list是可以重复的
  */
+@SuppressWarnings({"all"})
 public class SetDemo03 {
 
     public static void main(String[] args) {

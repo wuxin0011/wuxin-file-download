@@ -3,7 +3,7 @@ package com.wuxin.bean;
 /**
  * @Author: wuxin001
  * @Date: 2022/04/13/6:59
- * @Description:
+ * @Description: docker
  */
 public
 class People implements Runnable {
