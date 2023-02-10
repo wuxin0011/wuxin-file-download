@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/mvc
+            http://www.springframework.org/schema/mvc/spring-mvc.xsd
+            http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/mvc/spring-aop.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <context:component-scan base-package="com.wuxin.service"/>
+
+
+    <!--配置事务传播方式，以及异常回滚-->
+    <!--        <tx:advice id="txadvice" transaction-manager="transactionManager">-->
+    <!--            <tx:attributes>-->
+    <!--                <tx:method name="add*" propagation="REQUIRED" rollback-for="Exception"/>-->
+    <!--                <tx:method name="del*" propagation="REQUIRED" rollback-for="Exception"/>-->
+    <!--                <tx:method name="edit*" propagation="REQUIRED" rollback-for="Exception"/>-->
+    <!--                <tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"/>-->
+    <!--                <tx:method name="list*" propagation="REQUIRED" rollback-for="Exception"/>-->
+    <!--            </tx:attributes>-->
+    <!--        </tx:advice>-->
+
+    <!--配置切面-->
+
+    <!--    <aop:config>-->
+    <!--        <aop:pointcut id="serviceMethod" expression="execution(* com.wuxin.service.*.*(..))"/>-->
+    <!--        <aop:advisor pointcut-ref="serviceMethod" advice-ref="txadvice"/>-->
+    <!--    </aop:config>-->
+
+
+    <!-- 配置基于注解的声明式事务 -->
+    <!--    <tx:annotation-driven transaction-manager="transactionManager" order="1"/>-->
+
+
+    <!-- 注解方式实现AOP -->
+
+    <!-- 激活自动代理功能   -->
+    <!-- 代理方式1：采用JDK代理 -->
+    <!--    <aop:aspectj-autoproxy/>-->
+    <!--     代理方式2：cglib代理 -->
+    <!--     <aop:aspectj-autoproxy proxy-target-class="true"/>   -->
+    <!-- 找到被注解了的切面类，进行切面配置 -->
+    <!--    <context:component-scan base-package="com.wuxin.aspect"/>-->
+    <!--    <context:component-scan base-package="com.wuxin.controller"/>-->
+
+
+</beans>

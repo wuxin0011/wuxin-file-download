@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuxin.mapper.UserMapper">
+
+    <select id="list" resultType="com.wuxin.pojo.User" parameterType="java.lang.String">
+        select id, username, email, status, role, create_time
+        from user
+        <if test="username !=null">
+            where username like CONCAT("%",#{username},"%")
+        </if>
+        order by create_time desc
+    </select>
+
+    <select id="login" resultType="com.wuxin.pojo.User" parameterType="java.lang.String">
+        select *
+        from user
+        where email = #{email}
+          and `password` = #{password}
+    </select>
+
+    <select id="queryOne" parameterType="java.lang.Integer" resultType="com.wuxin.pojo.User">
+        select id, username, email, status, `role`, create_time
+        from user
+        where id = #{id}
+    </select>
+
+    <select id="queryUserByEmail" parameterType="java.lang.String" resultType="com.wuxin.pojo.User">
+        select id, username, email, status, `role`, create_time
+        from user
+        where email = #{email}
+    </select>
+
+    <select id="queryUserByName" parameterType="java.lang.String" resultType="com.wuxin.pojo.User">
+        select id, username, email, status, `role`, create_time
+        from user
+        where username = #{username}
+    </select>
+
+    <select id="queryUserByEmailOrName" parameterType="java.lang.String" resultType="com.wuxin.pojo.User">
+        select id, username, email, status, `role`, create_time
+        from user
+        where username = #{keywords}
+           or email = #{keywords}
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete
+        from user
+        where id = #{id}
+    </delete>
+
+    <update id="update" parameterType="com.wuxin.pojo.User">
+        update user
+        <set>
+            <if test="username != null and username!=''">
+                `username`=#{username},
+            </if>
+            <if test="password != null and password!=''">
+                `password`=#{password},
+            </if>
+
+            <if test="email != null and email!=''">
+                `email`=#{email},
+            </if>
+            <if test="status != null">
+                `status`=#{status},
+            </if>
+            <if test="role != null">
+                `role`=#{role}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="updateStatus">
+        update user
+        set status=#{status}
+        where id = #{id}
+    </update>
+
+    <insert id="add" parameterType="com.wuxin.pojo.User">
+        insert into user
+            (`username`, `password`, `email`, `role`, `status`, `create_time`)
+        values (#{username}, #{password}, #{email}, 0, 1, NOW());
+    </insert>
+
+
+</mapper>

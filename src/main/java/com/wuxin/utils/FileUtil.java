@@ -1,11 +1,13 @@
 package com.wuxin.utils;
 
 import com.wuxin.exception.CustomException;
+import org.apache.commons.io.FileUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -94,12 +96,10 @@ public class FileUtil {
         try {
             HttpServletResponse response = ServletUtil.getResponse();
             //获取文件输入流
-            InputStream bis = new BufferedInputStream(new FileInputStream(file));
-
+            InputStream bis = new BufferedInputStream(Files.newInputStream(file.toPath()));
             // 获取文件后缀
             String filename = name + ext(file.getName());
             filename = URLEncoder.encode(filename, "UTF-8");
-
             response.addHeader("Content-Disposition", "attachment;filename=" + filename);
             //设置文件ContentType类型，这样设置，会自动判断下载文件类型
             response.setContentType("multipart/form-data");
@@ -111,6 +111,7 @@ public class FileUtil {
             }
             out.flush();
             out.close();
+            bis.close();
         } catch (IOException e) {
             e.printStackTrace();
             throw new CustomException("文件下载失败！");

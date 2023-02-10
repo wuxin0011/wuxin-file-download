@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuxin.mapper.CategoryMapper">
+
+    <select id="list" resultType="com.wuxin.pojo.Category">
+        select *
+        from category;
+    </select>
+
+
+    <select id="queryOne" parameterType="java.lang.Integer" resultType="com.wuxin.pojo.Category">
+        select *
+        from category
+        where cid = #{cid}
+    </select>
+
+    <select id="queryOneByName" parameterType="java.lang.String" resultType="com.wuxin.pojo.Category">
+        select *
+        from category
+        where name = #{name}
+    </select>
+
+
+    <select id="queryCount"  resultType="com.wuxin.vo.CategoryVo">
+        select c.*,count(f.cid) count from category c LEFT JOIN file f ON c.cid=f.cid GROUP BY c.cid
+    </select>
+
+
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete
+        from category
+        where cid = #{cid}
+    </delete>
+
+    <update id="update" parameterType="com.wuxin.pojo.Category">
+        update category
+        <set>
+            <if test="name != null">name=#{name}</if>
+        </set>
+        where cid = #{cid}
+    </update>
+
+    <insert id="add" parameterType="com.wuxin.pojo.Category">
+        insert into category (`name`)
+        values (#{name})
+    </insert>
+
+
+</mapper>

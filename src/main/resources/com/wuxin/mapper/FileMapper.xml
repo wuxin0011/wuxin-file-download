@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuxin.mapper.FileMapper">
+    <select id="list" resultType="com.wuxin.pojo.File" parameterType="java.lang.String">
+        select *
+        from file
+        <if test="name != null">
+            where name like CONCAT('%',#{name},'%')
+        </if>
+        order by create_time desc
+    </select>
+
+    <select id="queryPage" resultType="com.wuxin.vo.FileVo">
+        select c.name cname, f.*
+        from file f
+        LEFT JOIN category c on f.cid = c.cid
+        <if test="cid!=null|| cid !=0">
+            WHERE f.cid = #{cid}
+        </if>
+        ORDER BY f.create_time DESC LIMIT #{limit}, #{size}
+    </select>
+
+
+    <select id="count" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select count(DISTINCT fid)
+        from file
+        <if test="cid != null or cid!=0">
+            where cid =#{cid}
+        </if>
+    </select>
+
+
+    <select id="queryList" resultType="com.wuxin.pojo.File" parameterType="java.lang.String">
+        select *
+        from file
+        <if test="name != null">
+            where name like CONCAT('%',#{name},'%')
+        </if>
+        order by create_time desc
+    </select>
+
+
+    <select id="queryListByCid" resultType="com.wuxin.pojo.File" parameterType="java.lang.Integer">
+        select *
+        from file
+        where cid = #{cid}
+        order by create_time desc
+    </select>
+
+
+    <select id="queryListAndCategory" resultType="com.wuxin.vo.FileVo">
+        select c.name cname, f.*
+        from file f
+        left join category c
+        on f.cid = c.cid
+        <if test="cid != null || cid!=0">
+            where f.cid=#{cid}
+        </if>
+        order by f.create_time desc
+    </select>
+
+
+    <select id="queryOne" parameterType="java.lang.Integer" resultType="com.wuxin.pojo.File">
+        select *
+        from file
+        where fid = #{fid}
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete
+        from file
+        where fid = #{fid}
+    </delete>
+
+    <delete id="deleteByCid" parameterType="java.lang.Integer">
+        delete
+        from file
+        where cid = #{cid}
+    </delete>
+
+    <update id="update" parameterType="com.wuxin.pojo.File">
+        update file
+        <set>
+            <if test="name != null">name=#{name},</if>
+            <if test="url != null">url=#{url},</if>
+            <if test="cid != null">cid=#{cid},</if>
+            <if test="status != null">status=#{status}</if>
+        </set>
+
+        where fid = #{fid}
+    </update>
+
+    <insert id="add" parameterType="com.wuxin.pojo.File">
+        insert into file (`name`, `url`, `cid`, `status`, `create_time`)
+        values (#{name}, #{url}, #{cid}, 1, NOW())
+    </insert>
+</mapper>

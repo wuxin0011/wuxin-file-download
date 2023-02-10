@@ -42,6 +42,7 @@ public class MessageController {
         }
         // 将内容提交到数据库中
         messageService.add(new Message(null, content, email, 0, new Date()));
+        // 将消息通知给邮箱
         return R.ok("消息发送成功！");
     }
 
